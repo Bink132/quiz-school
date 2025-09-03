@@ -8,7 +8,27 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h3>[teamnaam]</h3>
-    <h1>hallo [naam speller] welke quiz wil je spelen</h1>
+<body class="quiz-body">
+
+  <!-- Teamnaam bovenaan -->
+  <header class="quiz-header">
+    <span class="teamnaam">[Teamnaam]</span>
+  </header>
+
+  <!-- Welkomsttekst -->
+  <section class="quiz-welcome">
+    <h1 class="quiz-title">
+      Hallo <em class="spelernaam">[naam speler]</em>,<br>
+      welke quiz wil je spelen?
+    </h1>
+  </section>
+
+  <!-- Drie thema-knoppen -->
+  <main class="quiz-options">
+    <button class="quiz-button">Thema 1</button>
+    <button class="quiz-button">Thema 2</button>
+    <button class="quiz-button">Thema 3</button>
+  </main>
+
 </body>
+</html>
