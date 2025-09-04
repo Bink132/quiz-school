@@ -141,13 +141,14 @@
 
     <script>
         const quizData = [
-            { question: "Vraag  –  1.     Hoe noem je dit?", image: "img/rugby-scrum.jpg", answers: ["scrum", "tackle", "try", "moul"], correct: 0 },
+            { question: "Vraag  –  1.     Hoe noem je dit?", image: "img rugby/rugby-scrum.jpg", answers: ["scrum", "tackle", "try", "moul"], correct: 0 },
             { question: "Welke planeet staat bekend als de Rode Planeet?", image: "images/mars.jpg", answers: ["Venus", "Mars", "Jupiter", "Saturnus"], correct: 1 },
             { question: "Wat is 5 + 7?", image: "images/math.jpg", answers: ["10", "11", "12", "13"], correct: 2 },
             // Voeg hier nog vragen toe
         ];
 
         let currentQuestion = 0;
+        let userAnswers = [];
         let score = 0;
         let timeLeft = 15;
         let timerInterval;
@@ -187,16 +188,29 @@
             if(selected === q.correct) {
                 score++;
             }
+            userAnswers.push({
+    question: q.question,
+    chosen: selected >= 0 ? q.answers[selected] : "Geen antwoord",
+    correct: q.answers[q.correct],
+    isCorrect: selected === q.correct
+});
+
             currentQuestion++;
             loadQuestion();
         }
 
         function showResult() {
-            document.getElementById('quiz-container').style.display = 'none';
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'flex';
-            document.getElementById('score').innerText = score;
-        }
+    // Sla quizresultaten op in localStorage
+    localStorage.setItem("quizScore", score);
+    localStorage.setItem("quizMaxScore", quizData.length);
+    localStorage.setItem("quizName", "Jan"); // later kan je dit aanpassen met invoer
+    localStorage.setItem("quizResults", JSON.stringify(userAnswers));
+
+    // Ga naar result.html
+    window.location.href = "../eindscherm.html";
+
+}
+
 
         loadQuestion();
     </script>

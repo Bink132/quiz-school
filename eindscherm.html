@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Resultaten</title>
+    <style>
+        html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* optioneel achtergrondkleur */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.scoreboard, #details {
+    width: 100%;
+}
+.result-box {
+    width: 100%;
+}
+
+        h1, h2 {
+            text-align: center;
+        }
+        .scoreboard {
+            margin: 20px 0;
+        }
+        .scoreboard li {
+            margin: 5px 0;
+        }
+        .btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #1976d2;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 200px;
+        }
+        .result-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Resultaten</h1>
+    <div id="summary"></div>
+
+    <h2>Het scoreboard</h2>
+    <ol class="scoreboard" id="scoreboard">
+        <!-- Top 3 spelers -->
+    </ol>
+
+    <div class="btn" onclick="restartQuiz()" >Doe de quiz opnieuw</div>
+
+    <h2>Hoe heb je het gedaan?</h2>
+    <div id="details"></div>
+
+    <script>
+        // Haal data op uit localStorage
+        const score = localStorage.getItem("quizScore");
+        const maxScore = localStorage.getItem("quizMaxScore");
+        const name = localStorage.getItem("quizName") || "Speler";
+        const results = JSON.parse(localStorage.getItem("quizResults")) || [];
+
+        // Toon samenvatting
+        document.getElementById("summary").innerHTML =
+            `<p>Gefeliciteerd <b>${name}</b>, je hebt de quiz afgerond.<br>
+             Je score is: <b>${score}</b> van de <b>${maxScore}</b></p>`;
+
+        // Fake scoreboard (later kan je dit koppelen aan een backend)
+        const scoreboardData = [
+            { name: "Jan", points: score },
+            { name: "Anna", points: 8 },
+            { name: "Piet", points: 6 }
+        ];
+        const scoreboard = document.getElementById("scoreboard");
+        scoreboardData.forEach((s, i) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<i>${s.name}</i> — ${s.points} punten`;
+            scoreboard.appendChild(li);
+        });
+
+        // Details van de vragen
+        const details = document.getElementById("details");
+        results.forEach((res, i) => {
+            const box = document.createElement("div");
+            box.className = "result-box";
+            box.innerHTML = `
+                <p><b>Vraag ${i+1}:</b> ${res.question}</p>
+                <p>Deze vraag had je: <span class="${res.isCorrect ? 'correct' : 'wrong'}">
+                    ${res.isCorrect ? 'goed' : 'fout'}</span></p>
+                <p>Jouw antwoord: ${res.chosen}</p>
+                <p>Het juiste antwoord: <b>${res.correct}</b></p>
+            `;
+            details.appendChild(box);
+        });
+
+        function restartQuiz() {
+            window.location.href = "themascherm.html";
+        }
+    </script>
+</body>
+</html>
