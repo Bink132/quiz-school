@@ -2,8 +2,14 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Fullscreen Quiz</title>
+    <title>Quiz</title>
     <style>
+        .teamnaam {
+          display: flex;
+          justify-content: left;
+        font-style: italic;
+          font-size: 30px;
+        }
         html, body {
             margin: 0;
             padding: 0;
@@ -135,7 +141,7 @@
 
     <script>
         const quizData = [
-            { question: "Wat is de hoofdstad van Nederland?", image: "img/rugby-scrum.jpg", answers: ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht"], correct: 0 },
+            { question: "Vraag  –  1.     Hoe noem je dit?", image: "img/rugby-scrum.jpg", answers: ["scrum", "tackle", "try", "moul"], correct: 0 },
             { question: "Welke planeet staat bekend als de Rode Planeet?", image: "images/mars.jpg", answers: ["Venus", "Mars", "Jupiter", "Saturnus"], correct: 1 },
             { question: "Wat is 5 + 7?", image: "images/math.jpg", answers: ["10", "11", "12", "13"], correct: 2 },
             // Voeg hier nog vragen toe
