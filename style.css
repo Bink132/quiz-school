@@ -130,3 +130,10 @@ input {
     font-size: 14px;
   }
 }
+
+/* quiz rugby pagina*/
+
+.quiz-title-vraag {
+  display: flex;
+  justify-content: center;
+}

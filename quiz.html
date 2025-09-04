@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Layout</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: auto; }
+        #question { font-size: 24px; font-weight: bold; }
+        #middle { display: flex; justify-content: space-between; align-items: center; }
+        #player-name { font-size: 18px; width: 100px; text-align: left; }
+        #question-img { max-width: 200px; max-height: 200px; }
+        #timer { font-size: 20px; width: 100px; text-align: right; }
+        .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .answers button { padding: 15px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Quiz</h1>
+    <div id="quiz-container">
+        <div id="question"></div>
+        <div id="middle">
+            <div id="player-name">Speler: Jan</div>
+            <img id="question-img" src="" alt="Question image">
+            <div id="timer"></div>
+        </div>
+        <div class="answers">
+            <button id="btn0"></button>
+            <button id="btn1"></button>
+            <button id="btn2"></button>
+            <button id="btn3"></button>
+        </div>
+    </div>
+    <div id="result" style="display:none;">
+        <h2>Je score: <span id="score"></span>/10</h2>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "Wat is de hoofdstad van Nederland?", image: "img/rugby-scrum.jpg", answers: ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht"], correct: 0 },
+            { question: "Welke planeet staat bekend als de Rode Planeet?", image: "images/mars.jpg", answers: ["Venus", "Mars", "Jupiter", "Saturnus"], correct: 1 },
+            { question: "Wat is 5 + 7?", image: "images/math.jpg", answers: ["10", "11", "12", "13"], correct: 2 },
+            // Voeg hier nog meer vragen toe
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timeLeft = 15;
+        let timerInterval;
+
+        function loadQuestion() {
+            if(currentQuestion >= quizData.length) {
+                showResult();
+                return;
+            }
+
+            const q = quizData[currentQuestion];
+            document.getElementById('question').innerText = q.question;
+            document.getElementById('question-img').src = q.image;
+
+            q.answers.forEach((answer, index) => {
+                const btn = document.getElementById('btn' + index);
+                btn.innerText = answer;
+                btn.onclick = () => selectAnswer(index);
+            });
+
+            timeLeft = 15;
+            document.getElementById('timer').innerText = `${timeLeft}s`;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `${timeLeft}s`;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    selectAnswer(-1);
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(selected) {
+            clearInterval(timerInterval);
+            const q = quizData[currentQuestion];
+            if(selected === q.correct) {
+                score++;
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('score').innerText = score;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
