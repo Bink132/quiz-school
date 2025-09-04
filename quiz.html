@@ -2,26 +2,127 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Layout</title>
+    <title>Fullscreen Quiz</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        #quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: auto; }
-        #question { font-size: 24px; font-weight: bold; }
-        #middle { display: flex; justify-content: space-between; align-items: center; }
-        #player-name { font-size: 18px; width: 100px; text-align: left; }
-        #question-img { max-width: 200px; max-height: 200px; }
-        #timer { font-size: 20px; width: 100px; text-align: right; }
-        .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .answers button { padding: 15px; font-size: 16px; cursor: pointer; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        #quiz-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Boven: vraag */
+        #question {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Midden: spelernaam - afbeelding - timer */
+        #middle {
+            flex: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #player-name {
+            font-size: 2em;
+            width: 25%;
+            text-align: left;
+        }
+
+        #center-img-container {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #question-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Timer in een rondje */
+        #timer {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        /* Onder: antwoorden 2x2 */
+        .answers {
+            flex: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .answers button {
+            font-size: 2em;
+            padding: 20px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        #btn0 { background-color: #f44336; } /* rood */
+        #btn1 { background-color: #4caf50; } /* groen */
+        #btn2 { background-color: #2196f3; } /* blauw */
+        #btn3 { background-color: #ff9800; } /* oranje */
+
+        #result {
+            display: none;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+        }
     </style>
+      <script src="naam js/script2.js" defer></script>
 </head>
 <body>
-    <h1>Quiz</h1>
     <div id="quiz-container">
         <div id="question"></div>
         <div id="middle">
-            <div id="player-name">Speler: Jan</div>
-            <img id="question-img" src="" alt="Question image">
+            <span class="teamnaam" id="output">[Teamnaam]</span>
+            <div id="center-img-container">
+                <img id="question-img" src="" alt="Question image">
+            </div>
             <div id="timer"></div>
         </div>
         <div class="answers">
@@ -31,16 +132,13 @@
             <button id="btn3"></button>
         </div>
     </div>
-    <div id="result" style="display:none;">
-        <h2>Je score: <span id="score"></span>/10</h2>
-    </div>
 
     <script>
         const quizData = [
             { question: "Wat is de hoofdstad van Nederland?", image: "img/rugby-scrum.jpg", answers: ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht"], correct: 0 },
             { question: "Welke planeet staat bekend als de Rode Planeet?", image: "images/mars.jpg", answers: ["Venus", "Mars", "Jupiter", "Saturnus"], correct: 1 },
             { question: "Wat is 5 + 7?", image: "images/math.jpg", answers: ["10", "11", "12", "13"], correct: 2 },
-            // Voeg hier nog meer vragen toe
+            // Voeg hier nog vragen toe
         ];
 
         let currentQuestion = 0;
@@ -65,11 +163,11 @@
             });
 
             timeLeft = 15;
-            document.getElementById('timer').innerText = `${timeLeft}s`;
+            document.getElementById('timer').innerText = timeLeft;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 timeLeft--;
-                document.getElementById('timer').innerText = `${timeLeft}s`;
+                document.getElementById('timer').innerText = timeLeft;
                 if(timeLeft <= 0) {
                     clearInterval(timerInterval);
                     selectAnswer(-1);
@@ -89,7 +187,8 @@
 
         function showResult() {
             document.getElementById('quiz-container').style.display = 'none';
-            document.getElementById('result').style.display = 'block';
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'flex';
             document.getElementById('score').innerText = score;
         }
 
