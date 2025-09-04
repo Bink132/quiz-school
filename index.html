@@ -6,21 +6,25 @@
   <title>Quiz Startpagina</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- JavaScript goed inladen -->
+  <script src="naam js/script1.js" defer></script>
 </head>
 <body>
   <h1>Welkom</h1>
-  <p><i>Test je kennis, scherpte en inzicht in drie uitdagende thema’s!<br>
-    •   Rugby – Hoe goed ken jij de spelregels, geschiedenis en iconische momenten van deze ruige sport?<br>
-    •   IQ-patronen – Ontdek of jij de logica achter cijfers en figuren kunt doorzien. Klik het juiste vervolgpatroon en bewijs je denkvermogen.<br>
-    •   Psychologische thema’s – Van emoties herkennen tot inzicht in gedrag: daag jezelf uit in de wereld van de psychologie.<br>
- 
-De quiz start eenvoudig, maar wordt stap voor stap uitdagender. Denk snel, denk slim en kijk hoe ver jij raakt!</i></p>
- 
-  <form action="themascherm.html" method="get">
-    <label for="name">Wat is je naam?</label>
-    <input type="text" id="name" name="name" placeholder="Your name" required>
+  <p><i>
+    Test je kennis, scherpte en inzicht in drie uitdagende thema’s!<br>
+    • Rugby – Hoe goed ken jij de spelregels, geschiedenis en iconische momenten?<br>
+    • IQ-patronen – Ontdek of jij de logica achter cijfers en figuren kunt doorzien.<br>
+    • Psychologische thema’s – Van emoties herkennen tot inzicht in gedrag: daag jezelf uit.<br>
     <br>
-    <button type="submit" href="themascherm.html" >Start quiz</button>
+    De quiz start eenvoudig, maar wordt stap voor stap uitdagender. Denk snel, denk slim en kijk hoe ver jij raakt!
+  </i></p>
+ 
+  <form id="naamForm">
+    <label for="naam">Wat is je naam?</label>
+    <input type="text" id="naam" name="naam" placeholder="je naam" required>
+    <br>
+    <button id="opslaanBtn" type="submit" href="themascherm.html">Start quiz</button>
   </form>
 </body>
 </html>
