@@ -118,6 +118,27 @@
             align-items: center;
             font-size: 3em;
         }
+        #question-img {
+        width: 430px;        /* 👈 fixed width */
+        height: 300px;       /* 👈 fixed height */
+        object-fit: contain; /* keep aspect ratio, no stretching */
+        display: block;
+        }
+        html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        overflow: hidden;   /* 🚫 disables scrolling */
+        }
+
+        #quiz-container {
+        height: 100vh;      /* exactly the viewport height */
+        width: 100vw;       /* exactly the viewport width */
+        overflow: hidden;   /* make sure children don’t overflow */
+        }
+
     </style>
       <script src="naam js/script2.js" defer></script>
 </head>
@@ -141,16 +162,16 @@
 
     <script>
         const quizData = [
-            { question: "Vraag  –  1.     Deze persoonlijkheidsstoornis wordt gekenmerkt door perfectionisme, sterke behoefte aan controle en rigide gedrag. Welke stoornis is dit?", image: "../img/img-psychologie/personality_disorder.png", answers: ["Borderline", "Histrionic ", "Obsessive-compulsive", "Schizoid"], correct: 2 },
-            { question: "Vraag  –  2. Dit copingmechanisme wordt gebruikt als je stress ervaart, zonder er direct iets aan te doen.", image: "../img/img-psychologie/Coping_mechanism.png", answers: ["Pakt problemen meteen aan", "Vermijdt of stelt uit", "Zoekt advies bij anderen", "Probeert positief te denken "], correct: 1 },
-            { question: "Vraag – 3. Enneagram 5 houdt ervan alleen te zijn, leest veel en denkt diep na voordat hij iets zegt. Welke eigenschap past het beste bij dit type?", image: "../img/img-psychologie/enneagram.png", answers: ["Houdt van feestje en veel vrienden", "Neemt tijd om te leren en nadenken", "Besluit snel zonder veel nadenken", "Wil graag de leiding hebben over anderen"], correct: 1 },
-            { question: "Vraag – 4. Welke fobie is de angst voor spinnen?", image: "../img/img-psychologie/Phobia.png", answers: ["Arachnofobie", "Claustrofobie", "Acrofobie", "Nyctofobie"], correct: 0 },
-            { question: "Vraag – 5. INTJ persoonlijkheidstype denkt veel na en plant vooruit. Welke eigenschap hoort bij een INTJ?", image: "../img/img-psychologie/MBTI.png", answers: ["Spontaan en leeft in het moment", "Houdt van lange termijn strategie", "Zoekt altijd sociale aandacht", "Past zich aan om iedereen tevreden te houden"], correct: 1 },
-            { question: "Vraag – 6. Welke love style is: iemand laten zien dat je om hen geeft door samen aandachtig tijd door te brengen?", image: "../img/img-psychologie/love style.png", answers: ["Quality time", "Waarderende woorden", "Cadeaus geven", "Lichamelijke aanraking"], correct: 0 },
-            { question: "Vraag – 7. Welke eigenschap hoort bij psychopathy?", image: "../img/img-psychologie/Dark triad.png", answers: ["Gebrek aan empathie", "Perfectionisme", "Angst om alleen te zijn", "Overmatig emotioneel drama"], correct: 0 },
-            { question: "Vraag – 8. Welke eigenschap hoort bij narcissism?", image: "../img/img-psychologie/narcissism.png", answers: ["Extreme behoefte aan bewondering", "Vermijden van sociale contacten", "Overmatig plannen en organiseren", "Diep nadenken en analyseren"], correct: 0 },
-            { question: "Vraag – 9. Wie gebruikt eerst veel aandacht om later schuldgevoelens op te wekken?", image: "../img/img-psychologie/manipulatie.png", answers: ["Gaslighting", "Love bombing", "Silent treatment", "Mirroring"], correct: 1 },
-            { question: "Vraag – 10. Laat je baas altijd groter lijken dan jij, anders voelt hij zich bedreigd. Welke law is dit?", image: "../img/img-psychologie/48_laws_of_power.png", answers: ["Law 6 – Trek aandacht", "Law 1 – Overschaduw nooit de meester", "Law 15 – Vernietig je vijand", "Law 33 – Vind iemands zwakke punt"], correct: 1 },
+            { question: "Deze persoonlijkheidsstoornis wordt gekenmerkt door perfectionisme, sterke behoefte aan controle en rigide gedrag. Welke stoornis is dit?", image: "../img/img-psychologie/personality_disorder.png", answers: ["Borderline", "Histrionic ", "Obsessive-compulsive", "Schizoid"], correct: 2 },
+            { question: "Dit copingmechanisme wordt gebruikt als je stress ervaart, zonder er direct iets aan te doen.", image: "../img/img-psychologie/Coping_mechanism.png", answers: ["Pakt problemen meteen aan", "Vermijdt of stelt uit", "Zoekt advies bij anderen", "Probeert positief te denken "], correct: 1 },
+            { question: "Enneagram 5 houdt ervan alleen te zijn, leest veel en denkt diep na voordat hij iets zegt. Welke eigenschap past het beste bij dit type?", image: "../img/img-psychologie/enneagram.png", answers: ["Houdt van feestje en veel vrienden", "Neemt tijd om te leren en nadenken", "Besluit snel zonder veel nadenken", "Wil graag de leiding hebben over anderen"], correct: 1 },
+            { question: "Welke fobie is de angst voor spinnen?", image: "../img/img-psychologie/Phobia.png", answers: ["Arachnofobie", "Claustrofobie", "Acrofobie", "Nyctofobie"], correct: 0 },
+            { question: "INTJ persoonlijkheidstype denkt veel na en plant vooruit. Welke eigenschap hoort bij een INTJ?", image: "../img/img-psychologie/MBTI.png", answers: ["Spontaan en leeft in het moment", "Houdt van lange termijn strategie", "Zoekt altijd sociale aandacht", "Past zich aan om iedereen tevreden te houden"], correct: 1 },
+            { question: "Welke love style is: iemand laten zien dat je om hen geeft door samen aandachtig tijd door te brengen?", image: "../img/img-psychologie/love style.png", answers: ["Quality time", "Waarderende woorden", "Cadeaus geven", "Lichamelijke aanraking"], correct: 0 },
+            { question: "Welke eigenschap hoort bij psychopathy?", image: "../img/img-psychologie/Dark triad.png", answers: ["Gebrek aan empathie", "Perfectionisme", "Angst om alleen te zijn", "Overmatig emotioneel drama"], correct: 0 },
+            { question: "Welke eigenschap hoort bij narcissism?", image: "../img/img-psychologie/narcissism.png", answers: ["Extreme behoefte aan bewondering", "Vermijden van sociale contacten", "Overmatig plannen en organiseren", "Diep nadenken en analyseren"], correct: 0 },
+            { question: "Wie gebruikt eerst veel aandacht om later schuldgevoelens op te wekken?", image: "../img/img-psychologie/manipulatie.png", answers: ["Gaslighting", "Love bombing", "Silent treatment", "Mirroring"], correct: 1 },
+            { question: "Laat je baas altijd groter lijken dan jij, anders voelt hij zich bedreigd. Welke law is dit?", image: "../img/img-psychologie/48_laws_of_power.png", answers: ["Law 6 – Trek aandacht", "Law 1 – Overschaduw nooit de meester", "Law 15 – Vernietig je vijand", "Law 33 – Vind iemands zwakke punt"], correct: 1 },
             // Voeg hier nog vragen toe
         ];
 
