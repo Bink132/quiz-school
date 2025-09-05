@@ -3,28 +3,431 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Startpagina</title>
+  <title>Quiz</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- JavaScript goed inladen -->
-  <script src="Snaam js/script1.js" defer></script>
+  <style>
+    /* Quiz- en eindscherm extra styles */
+    #quiz-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+    #question {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      text-align: center;
+      padding: 20px;
+    }
+    #middle {
+      flex: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+    #timer {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: red;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .answers {
+      flex: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+    .answers button {
+      font-size: 1.5em;
+      padding: 20px;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #btn0 { background-color: #f44336; }
+    #btn1 { background-color: #4caf50; }
+    #btn2 { background-color: #2196f3; }
+    #btn3 { background-color: #ff9800; }
+
+    .result-box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    .correct { color: green; font-weight: bold; }
+    .wrong { color: red; font-weight: bold; }
+
+    body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px;
+}
+ 
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+p {
+    padding-bottom: 50px;
+}
+ 
+label {
+    padding-bottom: 30px;
+    padding-right: 100px;
+}
+ 
+button {
+  margin-top: 10px;
+  padding: 12px 80px;
+  font-size: 1rem;
+  background-color: #3b4cca;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+ 
+button:hover {
+  background-color: #2a36a3;
+}
+ 
+form {
+  margin-top: 20px;
+}
+ 
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+ 
+input {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  width: 250px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+/* dit is de thema css */
+
+/* Algemene body-styling */
+.quiz-body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Header bovenaan */
+.quiz-header {
+  margin: 20px;
+}
+
+.teamnaam {
+  display: flex;
+  justify-content: left;
+  font-style: italic;
+  font-size: 30px;
+}
+
+/* Welkomstsectie */
+.quiz-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.spelernaam {
+  font-style: italic;
+}
+
+/* Container met quiz-opties */
+.quiz-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: wrap; /* Zorgt dat knoppen onder elkaar komen op kleine schermen */
+}
+
+/* Stijl voor de knoppen */
+.quiz-button {
+  background-color: #3949ab;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;               /* Tekst netjes centreren */
+  align-items: center;         /* Verticaal centreren */
+  justify-content: center;     /* Horizontaal centreren */
+  white-space: nowrap;         /* Voorkomt afbreken van tekst */
+  text-align: center;
+}
+
+
+.quiz-button:hover {
+  transform: scale(1.1);
+}
+
+/* Responsief tot 800px */
+@media (max-width: 800px) {
+  .quiz-title {
+    font-size: 22px;
+  }
+
+  .quiz-button {
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+  }
+}
+
+/* quiz rugby pagina*/
+
+.quiz-title-vraag {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+  </style>
 </head>
 <body>
-  <h1>Welkom</h1>
-  <p><i>
-    Test je kennis, scherpte en inzicht in drie uitdagende thema’s!<br>
-    • Rugby – Hoe goed ken jij de spelregels, geschiedenis en iconische momenten?<br>
-    • IQ-patronen – Ontdek of jij de logica achter cijfers en figuren kunt doorzien.<br>
-    • Psychologische thema’s – Van emoties herkennen tot inzicht in gedrag: daag jezelf uit.<br>
-    <br>
-    De quiz start eenvoudig, maar wordt stap voor stap uitdagender. Denk snel, denk slim en kijk hoe ver jij raakt!
-  </i></p>
- 
-  <form id="naamForm">
-    <label for="naam">Wat is je naam?</label>
-    <input type="text" id="naam" name="naam" placeholder="je naam" required>
-    <br>
-    <button id="opslaanBtn" type="submit" href="themascherm.html">Start quiz</button>
-  </form>
+
+  <!-- Startscherm -->
+  <section id="start-scherm">
+    <h1>Welkom</h1>
+    <p><i>
+      Test je kennis, scherpte en inzicht in drie uitdagende thema’s!<br>
+      • Rugby – Hoe goed ken jij de spelregels, geschiedenis en iconische momenten?<br>
+      • IQ-patronen – Ontdek of jij de logica achter cijfers en figuren kunt doorzien.<br>
+      • Psychologische thema’s – Van emoties herkennen tot inzicht in gedrag: daag jezelf uit.<br>
+      <br>
+      De quiz start eenvoudig, maar wordt stap voor stap uitdagender. Denk snel, denk slim en kijk hoe ver jij raakt!
+    </i></p>
+
+    <form id="naamForm">
+      <label for="naam">Wat is je naam?</label>
+      <input type="text" id="naam" name="naam" placeholder="je naam" required>
+      <br>
+      <button type="submit">Start quiz</button>
+    </form>
+  </section>
+
+  <!-- Thema scherm -->
+  <section id="thema-scherm" style="display:none;" class="quiz-body">
+    <header class="quiz-header">
+      <span class="teamnaam" id="teamnaam">[Teamnaam]</span>
+    </header>
+
+    <section class="quiz-welcome">
+      <h1 class="quiz-title">
+        Hallo <span id="spelernaam"></span><br>
+        Welke quiz wil je spelen?
+      </h1>
+    </section>
+
+    <main class="quiz-options">
+      <button class="quiz-button" onclick="startQuiz('rugby')">Rugby</button>
+      <button class="quiz-button" onclick="startQuiz('patronen')">Patronen</button>
+      <button class="quiz-button" onclick="startQuiz('psychologie')">Psychologie</button>
+    </main>
+  </section>
+
+  <!-- Quiz scherm -->
+  <section id="quiz-scherm" style="display:none;">
+    <div id="quiz-container">
+      <div id="question"></div>
+      <div id="middle">
+        <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
+        <div id="center-img-container">
+          <img id="question-img" src="" alt="Question image">
+        </div>
+        <div id="timer"></div>
+      </div>
+      <div class="answers">
+        <button id="btn0"></button>
+        <button id="btn1"></button>
+        <button id="btn2"></button>
+        <button id="btn3"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eindscherm -->
+  <section id="eind-scherm" style="display:none;">
+    <h1>Quiz Resultaten</h1>
+    <div id="summary"></div>
+    <h2>Het scoreboard</h2>
+    <ol class="scoreboard" id="scoreboard"></ol>
+    <div class="btn" onclick="restartQuiz()">Doe de quiz opnieuw</div>
+    <h2>Hoe heb je het gedaan?</h2>
+    <div id="details"></div>
+  </section>
+
+  <script>
+    let spelerNaam = "";
+    let currentQuiz = "";
+    let quizData = [];
+    let shuffledQuizData = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+    let timerInterval;
+    let timeLeft = 15;
+
+    function showScreen(id) {
+      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      document.getElementById(id).style.display = "block";
+    }
+
+    document.getElementById("naamForm").addEventListener("submit", e => {
+      e.preventDefault();
+      spelerNaam = document.getElementById("naam").value;
+      document.getElementById("teamnaam").innerText = spelerNaam;
+      document.getElementById("spelernaam").innerText = spelerNaam;
+      showScreen("thema-scherm");
+    });
+
+    function startQuiz(thema) {
+      currentQuiz = thema;
+      if (thema === "psychologie") {
+        quizData = psychologieVragen;
+      } else {
+        alert("Alleen psychologie quiz is nu ingebouwd.");
+        return;
+      }
+      shuffledQuizData = shuffle([...quizData]);
+      currentQuestion = 0;
+      score = 0;
+      userAnswers = [];
+      document.getElementById("quiz-teamnaam").innerText = spelerNaam;
+      showScreen("quiz-scherm");
+      loadQuestion();
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function loadQuestion() {
+      if (currentQuestion >= shuffledQuizData.length) {
+        showResult();
+        return;
+      }
+      const q = shuffledQuizData[currentQuestion];
+      document.getElementById('question').innerText = q.question;
+      document.getElementById('question-img').src = q.image;
+      q.answers.forEach((ans, i) => {
+        const btn = document.getElementById("btn"+i);
+        btn.innerText = ans;
+        btn.onclick = () => selectAnswer(i);
+      });
+      timeLeft = 15;
+      document.getElementById("timer").innerText = timeLeft;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          selectAnswer(-1);
+        }
+      }, 1000);
+    }
+
+    function selectAnswer(selected) {
+      clearInterval(timerInterval);
+      const q = shuffledQuizData[currentQuestion];
+      if (selected === q.correct) score++;
+      userAnswers.push({
+        question: q.question,
+        chosen: selected >= 0 ? q.answers[selected] : "Geen antwoord",
+        correct: q.answers[q.correct],
+        isCorrect: selected === q.correct
+      });
+      currentQuestion++;
+      loadQuestion();
+    }
+
+    function showResult() {
+      showScreen("eind-scherm");
+      document.getElementById("summary").innerHTML =
+        `<p>Gefeliciteerd <b>${spelerNaam}</b>, je hebt de quiz afgerond.<br>
+        Je score is: <b>${score}</b> van de <b>${shuffledQuizData.length}</b></p>`;
+      const scoreboard = document.getElementById("scoreboard");
+      scoreboard.innerHTML = "";
+      const data = [
+        {name: spelerNaam, points: score},
+        {name: "Anna", points: 8},
+        {name: "Piet", points: 6}
+      ];
+      data.forEach(d => {
+        const li = document.createElement("li");
+        li.innerHTML = `<i>${d.name}</i> — ${d.points} punten`;
+        scoreboard.appendChild(li);
+      });
+      const details = document.getElementById("details");
+      details.innerHTML = "";
+      userAnswers.forEach((res, i) => {
+        const box = document.createElement("div");
+        box.className = "result-box";
+        box.innerHTML = `
+          <p><b>Vraag ${i+1}:</b> ${res.question}</p>
+          <p>Deze vraag had je: <span class="${res.isCorrect ? 'correct' : 'wrong'}">
+            ${res.isCorrect ? 'goed' : 'fout'}</span></p>
+          <p>Jouw antwoord: ${res.chosen}</p>
+          <p>Het juiste antwoord: <b>${res.correct}</b></p>
+        `;
+        details.appendChild(box);
+      });
+    }
+
+    function restartQuiz() {
+      showScreen("thema-scherm");
+    }
+
+    const psychologieVragen = [
+      { question: "Vraag 1. Deze persoonlijkheidsstoornis wordt gekenmerkt door perfectionisme, sterke behoefte aan controle en rigide gedrag. Welke stoornis is dit?", image: "img/img-psychologie/personality_disorder.png", answers: ["Borderline","Histrionic","Obsessive-compulsive","Schizoid"], correct: 2 },
+      { question: "Vraag 2. Dit copingmechanisme wordt gebruikt als je stress ervaart, zonder er direct iets aan te doen.", image: "img/img-psychologie/Coping_mechanism.png", answers: ["Pakt problemen meteen aan", "Vermijdt of stelt uit", "Zoekt advies bij anderen", "Probeert positief te denken "], correct: 1 },
+      { question: "Vraag 3. Enneagram 5 houdt ervan alleen te zijn, leest veel en denkt diep na voordat hij iets zegt. Welke eigenschap past het beste bij dit type?", image: "img/img-psychologie/enneagram.png", answers: ["Houdt van feestje en veel vrienden","Neemt tijd om te leren en nadenken","Besluit snel zonder veel nadenken","Wil graag de leiding hebben over anderen"], correct: 1 },
+      { question: "Vraag 4. Welke fobie is de angst voor spinnen?", image: "img/img-psychologie/Phobia.png", answers: ["Arachnofobie","Claustrofobie","Acrofobie","Nyctofobie"], correct: 0 },
+      { question: "Vraag 5. INTJ persoonlijkheidstype denkt veel na en plant vooruit. Welke eigenschap hoort bij een INTJ?", image: "img/img-psychologie/MBTI.png", answers: ["Spontaan en leeft in het moment","Houdt van lange termijn strategie","Zoekt altijd sociale aandacht","Past zich aan om iedereen tevreden te houden"], correct: 1 },
+      { question: "Vraag 6. Welke love style is: iemand laten zien dat je om hen geeft door samen aandachtig tijd door te brengen?", image: "img/img-psychologie/love style.png", answers: ["Quality time","Waarderende woorden","Cadeaus geven","Lichamelijke aanraking"], correct: 0 },
+      { question: "Vraag 7. Welke eigenschap hoort bij psychopathy?", image: "img/img-psychologie/Dark triad.png", answers: ["Gebrek aan empathie","Perfectionisme","Angst om alleen te zijn","Overmatig emotioneel drama"], correct: 0 },
+      { question: "Vraag 8. Welke eigenschap hoort bij narcissism?", image: "img/img-psychologie/narcissism.png", answers: ["Extreme behoefte aan bewondering","Vermijden van sociale contacten","Overmatig plannen en organiseren","Diep nadenken en analyseren"], correct: 0 },
+      { question: "Vraag 9. Wie gebruikt eerst veel aandacht om later schuldgevoelens op te wekken?", image: "img/img-psychologie/manipulatie.png", answers: ["Gaslighting","Love bombing","Silent treatment","Mirroring"], correct: 1 },
+      { question: "Vraag 10. Laat je baas altijd groter lijken dan jij, anders voelt hij zich bedreigd. Welke law is dit?", image: "img/img-psychologie/48_laws_of_power.png", answers: ["Law 6 – Trek aandacht","Law 1 – Overschaduw nooit de meester","Law 15 – Vernietig je vijand","Law 33 – Vind iemands zwakke punt"], correct: 1 }
+    ];
+  </script>
 </body>
 </html>
