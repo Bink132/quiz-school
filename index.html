@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    /* ----------------------------------------------
+       Hier staat jouw originele inline CSS (hersteld)
+       ---------------------------------------------- */
     /* Quiz- en eindscherm extra styles */
     #quiz-container {
       display: flex;
@@ -74,147 +77,139 @@
     .wrong { color: red; font-weight: bold; }
 
     body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px;
-}
- 
-h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  padding-bottom: 30px;
-}
-p {
-    padding-bottom: 50px;
-}
- 
-label {
-    padding-bottom: 30px;
-    padding-right: 100px;
-}
- 
-button {
-  margin-top: 10px;
-  padding: 12px 80px;
-  font-size: 1rem;
-  background-color: #3b4cca;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
- 
-button:hover {
-  background-color: #2a36a3;
-}
- 
-form {
-  margin-top: 20px;
-}
- 
-label {
-  display: block;
-  margin-bottom: 8px;
-}
- 
-input {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px;
-  width: 250px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-}
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
 
-/* dit is de thema css */
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      padding-bottom: 30px;
+    }
+    p {
+      padding-bottom: 50px;
+    }
 
-/* Algemene body-styling */
-.quiz-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  background-color: #fff;
-  color: #000;
-}
+    label {
+      padding-bottom: 30px;
+      padding-right: 100px;
+    }
 
-/* Header bovenaan */
-.quiz-header {
-  margin: 20px;
-}
+    button {
+      margin-top: 10px;
+      padding: 12px 80px;
+      font-size: 1rem;
+      background-color: #3b4cca;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-.teamnaam {
-  display: flex;
-  justify-content: left;
-  font-style: italic;
-  font-size: 30px;
-}
+    button:hover {
+      background-color: #2a36a3;
+    }
 
-/* Welkomstsectie */
-.quiz-title {
-  font-size: 28px;
-  font-weight: bold;
-}
+    form {
+      margin-top: 20px;
+    }
 
-.spelernaam {
-  font-style: italic;
-}
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
 
-/* Container met quiz-opties */
-.quiz-options {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
-  flex-wrap: wrap; /* Zorgt dat knoppen onder elkaar komen op kleine schermen */
-}
+    input {
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      width: 250px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
 
-/* Stijl voor de knoppen */
-.quiz-button {
-  background-color: #3949ab;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s;
-  display: flex;               /* Tekst netjes centreren */
-  align-items: center;         /* Verticaal centreren */
-  justify-content: center;     /* Horizontaal centreren */
-  white-space: nowrap;         /* Voorkomt afbreken van tekst */
-  text-align: center;
-}
+    /* dit is de thema css */
 
+    /* Algemene body-styling */
+    .quiz-body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #fff;
+      color: #000;
+    }
 
-.quiz-button:hover {
-  transform: scale(1.1);
-}
+    /* Header bovenaan */
+    .quiz-header {
+      margin: 20px;
+    }
 
-/* Responsief tot 800px */
-@media (max-width: 800px) {
-  .quiz-title {
-    font-size: 22px;
-  }
+    .teamnaam {
+      display: flex;
+      justify-content: left;
+      font-style: italic;
+      font-size: 30px;
+    }
 
-  .quiz-button {
-    width: 100px;
-    height: 100px;
-    font-size: 14px;
-  }
-}
+    /* Welkomstsectie */
+    .quiz-title {
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-/* quiz rugby pagina*/
+    .spelernaam {
+      font-style: italic;
+    }
 
-.quiz-title-vraag {
-  display: flex;
-  justify-content: center;
-}
+    /* Container met quiz-opties */
+    .quiz-options {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
 
+    /* Stijl voor de knoppen */
+    .quiz-button {
+      background-color: #3949ab;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      text-align: center;
+    }
 
+    .quiz-button:hover {
+      transform: scale(1.1);
+    }
 
+    /* Responsief tot 800px */
+    @media (max-width: 800px) {
+      .quiz-title { font-size: 22px; }
+      .quiz-button {
+        width: 100px;
+        height: 100px;
+        font-size: 14px;
+      }
+    }
+
+    /* quiz rugby pagina*/
+    .quiz-title-vraag {
+      display: flex;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -266,7 +261,7 @@ input {
       <div id="middle">
         <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
         <div id="center-img-container">
-          <img id="question-img" src="" alt="Question image">
+          <img id="question-img" src="" alt="Question image" style="max-width:200px; max-height:140px;">
         </div>
         <div id="timer"></div>
       </div>
@@ -285,12 +280,18 @@ input {
     <div id="summary"></div>
     <h2>Het scoreboard</h2>
     <ol class="scoreboard" id="scoreboard"></ol>
-    <div class="btn" onclick="restartQuiz()">Doe de quiz opnieuw</div>
+    <div style="margin-top:15px;">
+      <button onclick="restartQuiz()">Doe de quiz opnieuw</button>
+    </div>
     <h2>Hoe heb je het gedaan?</h2>
     <div id="details"></div>
   </section>
 
+  <!-- --------------------------------------------
+       JavaScript - werkende, gestructureerde code
+       -------------------------------------------- -->
   <script>
+    /* <!-- uitleg: Globale variabelen bewaren de status van de quiz (naam, huidig thema, vragenlijst, index, score, timer). */
     let spelerNaam = "";
     let currentQuiz = "";
     let quizData = [];
@@ -298,44 +299,43 @@ input {
     let currentQuestion = 0;
     let score = 0;
     let userAnswers = [];
-    let timerInterval;
+    let timerInterval = null;
     let timeLeft = 15;
 
+    /* <!-- uitleg: showScreen verbergt alle <section> elementen en toont enkel het gevraagde scherm. --> */
     function showScreen(id) {
-      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-      document.getElementById(id).style.display = "block";
+      document.querySelectorAll("body > section").forEach(sec => sec.style.display = "none");
+      const el = document.getElementById(id);
+      if (el) el.style.display = "block";
     }
 
+    /* <!-- uitleg: Naamformulier afhandelen: naam bewaren en naar themascherm gaan. --> */
     document.getElementById("naamForm").addEventListener("submit", e => {
       e.preventDefault();
-      spelerNaam = document.getElementById("naam").value;
+      spelerNaam = document.getElementById("naam").value.trim() || "Speler";
       document.getElementById("teamnaam").innerText = spelerNaam;
       document.getElementById("spelernaam").innerText = spelerNaam;
       showScreen("thema-scherm");
     });
 
+    /* <!-- uitleg: startQuiz kiest de juiste vragenlijst op basis van thema, reset toestanden en start de quiz. --> */
     function startQuiz(thema) {
-  currentQuiz = thema;
-  if (thema === "psychologie") {
-    quizData = psychologieVragen;
-  } else if (thema === "rugby") {
-    quizData = rugbyVragen;
-  } else if (thema === "patronen") {
-    quizData = patronenVragen;
-  } else {
-    alert("Dit thema is nog niet beschikbaar.");
-    return;
-  }
-  shuffledQuizData = shuffle([...quizData]);
-  currentQuestion = 0;
-  score = 0;
-  userAnswers = [];
-  document.getElementById("quiz-teamnaam").innerText = spelerNaam;
-  showScreen("quiz-scherm");
-  loadQuestion();
-}
+      currentQuiz = thema;
+      if (thema === "psychologie") quizData = psychologieVragen;
+      else if (thema === "rugby") quizData = rugbyVragen;
+      else if (thema === "patronen") quizData = patronenVragen;
+      else { alert("Dit thema is nog niet beschikbaar."); return; }
 
+      shuffledQuizData = shuffle([...quizData]); // kopie en schudden
+      currentQuestion = 0;
+      score = 0;
+      userAnswers = [];
+      document.getElementById("quiz-teamnaam").innerText = spelerNaam;
+      showScreen("quiz-scherm");
+      loadQuestion();
+    }
 
+    /* <!-- uitleg: shuffle gebruikt Fisher-Yates om willekeurige volgorde te maken. --> */
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -344,19 +344,27 @@ input {
       return array;
     }
 
+    /* <!-- uitleg: loadQuestion toont huidige vraag, koppelt antwoorden aan knoppen en (her)start de timer. --> */
     function loadQuestion() {
+      // Als alle vragen klaar: resultaten tonen
       if (currentQuestion >= shuffledQuizData.length) {
         showResult();
         return;
       }
       const q = shuffledQuizData[currentQuestion];
-      document.getElementById('question').innerText = q.question;
-      document.getElementById('question-img').src = q.image;
+      document.getElementById('question').innerText = q.question || "";
+      document.getElementById('question-img').src = q.image || "";
+
+      // Plaats antwoorden op knoppen en maak click handlers
       q.answers.forEach((ans, i) => {
         const btn = document.getElementById("btn"+i);
         btn.innerText = ans;
+        // verwijder oude oncliks (veiligheidsmaatregel) en zet nieuwe
+        btn.onclick = null;
         btn.onclick = () => selectAnswer(i);
       });
+
+      // Timer (15 seconden)
       timeLeft = 15;
       document.getElementById("timer").innerText = timeLeft;
       clearInterval(timerInterval);
@@ -365,30 +373,41 @@ input {
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
-          selectAnswer(-1);
+          selectAnswer(-1); // geen antwoord gegeven
         }
       }, 1000);
     }
 
+    /* <!-- uitleg: selectAnswer verwerkt het gekozen antwoord, slaat het resultaat op en laadt volgende vraag. --> */
     function selectAnswer(selected) {
       clearInterval(timerInterval);
       const q = shuffledQuizData[currentQuestion];
-      if (selected === q.correct) score++;
+
+      const chosenText = (selected >= 0 && q.answers[selected] !== undefined) ? q.answers[selected] : "Geen antwoord";
+      const correctText = q.answers[q.correct] || "Onbekend";
+
+      const isCorrect = (selected === q.correct);
+      if (isCorrect) score++;
+
       userAnswers.push({
         question: q.question,
-        chosen: selected >= 0 ? q.answers[selected] : "Geen antwoord",
-        correct: q.answers[q.correct],
-        isCorrect: selected === q.correct
+        chosen: chosenText,
+        correct: correctText,
+        isCorrect: isCorrect
       });
+
       currentQuestion++;
+      // korte kleine vertraging (optioneel) kan toegevoegd worden; hier direct volgende vraag
       loadQuestion();
     }
 
+    /* <!-- uitleg: showResult bouwt het eindscherm met score, een simpele scoreboard en gedetailleerde feedback per vraag. --> */
     function showResult() {
       showScreen("eind-scherm");
       document.getElementById("summary").innerHTML =
         `<p>Gefeliciteerd <b>${spelerNaam}</b>, je hebt de quiz afgerond.<br>
         Je score is: <b>${score}</b> van de <b>${shuffledQuizData.length}</b></p>`;
+
       const scoreboard = document.getElementById("scoreboard");
       scoreboard.innerHTML = "";
       const data = [
@@ -401,6 +420,7 @@ input {
         li.innerHTML = `<i>${d.name}</i> — ${d.points} punten`;
         scoreboard.appendChild(li);
       });
+
       const details = document.getElementById("details");
       details.innerHTML = "";
       userAnswers.forEach((res, i) => {
@@ -417,10 +437,15 @@ input {
       });
     }
 
+    /* <!-- uitleg: restartQuiz stuurt de speler terug naar het themascherm zodat hij opnieuw kan kiezen. --> */
     function restartQuiz() {
       showScreen("thema-scherm");
     }
 
+    /* ----------------------------------------------
+       VRAAGBANKEN (je originele data) - geen veranderingen,
+       alleen netjes weergegeven zodat ze werken met bovenstaande code
+       ---------------------------------------------- */
     const psychologieVragen = [
       { question: "Deze persoonlijkheidsstoornis wordt gekenmerkt door perfectionisme, sterke behoefte aan controle en rigide gedrag. Welke stoornis is dit?", image: "img/img-psychologie/personality_disorder.png", answers: ["Borderline","Histrionic","Obsessive-compulsive","Schizoid"], correct: 2 },
       { question: "Dit copingmechanisme wordt gebruikt als je stress ervaart, zonder er direct iets aan te doen.", image: "img/img-psychologie/Coping_mechanism.png", answers: ["Pakt problemen meteen aan", "Vermijdt of stelt uit", "Zoekt advies bij anderen", "Probeert positief te denken "], correct: 1 },
@@ -433,20 +458,23 @@ input {
       { question: "Wie gebruikt eerst veel aandacht om later schuldgevoelens op te wekken?", image: "img/img-psychologie/manipulatie.png", answers: ["Gaslighting","Love bombing","Silent treatment","Mirroring"], correct: 1 },
       { question: "Laat je baas altijd groter lijken dan jij, anders voelt hij zich bedreigd. Welke law is dit?", image: "img/img-psychologie/48_laws_of_power.png", answers: ["Law 6 – Trek aandacht","Law 1 – Overschaduw nooit de meester","Law 15 – Vernietig je vijand","Law 33 – Vind iemands zwakke punt"], correct: 1 }
     ];
+
     const rugbyVragen = [
-  { question: "Welke positie staat bekend als 'scrum-half'?", image: "img/img-rugby/scrum_half.png", answers: ["Voorwaartsen", "Scrum-half", "Fly-half", "Flank"], correct: 1 },
-  { question: "Hoeveel spelers staan er in een rugbyteam?", image: "img/img-rugby/team.png", answers: ["11", "13", "15", "17"], correct: 2 },
-  { question: "Wat is een try?", image: "img/img-rugby/try.png", answers: ["Scoren van een doelpunt", "Een overtreding", "Een tackle", "Een penalty"], correct: 0 },
-  // Voeg hier minimaal 7 extra rugbyvragen toe om 10 te hebben
-];
+      { question: "Welke positie staat bekend als 'scrum-half'?", image: "img/img-rugby/scrum_half.png", answers: ["Voorwaartsen", "Scrum-half", "Fly-half", "Flank"], correct: 1 },
+      { question: "Hoeveel spelers staan er in een rugbyteam?", image: "img/img-rugby/team.png", answers: ["11", "13", "15", "17"], correct: 2 },
+      { question: "Wat is een try?", image: "img/img-rugby/try.png", answers: ["Scoren van een doelpunt", "Een overtreding", "Een tackle", "Een penalty"], correct: 0 },
+      // je kunt hier extra vragen toevoegen zoals eerder
+    ];
 
-const patronenVragen = [
-  { question: "Welke figuur hoort in het lege vak?", image: "img/img-patronen/patroon1.png", answers: ["A", "B", "C", "D"], correct: 2 },
-  { question: "Wat is het volgende cijfer in de reeks: 2, 4, 8, 16, ...?", image: "img/img-patronen/reeks.png", answers: ["18", "24", "32", "64"], correct: 2 },
-  { question: "Welke vorm past het best bij de symmetrie?", image: "img/img-patronen/symmetrie.png", answers: ["Vierkant", "Driehoek", "Cirkel", "Rechthoek"], correct: 0 },
-  // Voeg hier minimaal 7 extra patronenvragen toe om 10 te hebben
-];
+    const patronenVragen = [
+      { question: "Welke figuur hoort in het lege vak?", image: "img/img-patronen/patroon1.png", answers: ["A", "B", "C", "D"], correct: 2 },
+      { question: "Wat is het volgende cijfer in de reeks: 2, 4, 8, 16, ...?", image: "img/img-patronen/reeks.png", answers: ["18", "24", "32", "64"], correct: 2 },
+      { question: "Welke vorm past het best bij de symmetrie?", image: "img/img-patronen/symmetrie.png", answers: ["Vierkant", "Driehoek", "Cirkel", "Rechthoek"], correct: 0 },
+      // je kunt hier extra vragen toevoegen zoals eerder
+    ];
 
+    // Toon startscherm bij laden (veiligheid)
+    showScreen("start-scherm");
   </script>
 </body>
 </html>
