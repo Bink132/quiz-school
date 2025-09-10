@@ -302,14 +302,14 @@
     let timerInterval = null;
     let timeLeft = 15;
 
-    /* <!-- uitleg: showScreen verbergt alle <section> elementen en toont enkel het gevraagde scherm. --> */
+    /* <!-- uitleg: showScreen verbergt alle <section> elementen en toont enkel het gevraagde scherm. -- */
     function showScreen(id) {
       document.querySelectorAll("body > section").forEach(sec => sec.style.display = "none");
       const el = document.getElementById(id);
       if (el) el.style.display = "block";
     }
 
-    /* <!-- uitleg: Naamformulier afhandelen: naam bewaren en naar themascherm gaan. --> */
+    /* <!-- uitleg: Naamformulier afhandelen: naam bewaren en naar themascherm gaan. -- */
     document.getElementById("naamForm").addEventListener("submit", e => {
       e.preventDefault();
       spelerNaam = document.getElementById("naam").value.trim() || "Speler";
