@@ -353,6 +353,19 @@
     let timerInterval = null;
     let timeLeft = 15;
 
+    function restartQuiz() {
+  currentQuiz = "";
+  quizData = [];
+  shuffledQuizData = [];
+  currentQuestion = 0;
+  score = 0;
+  userAnswers = [];
+  clearInterval(timerInterval);
+  document.getElementById("question-img").style.display = "none";
+  showScreen("thema-scherm");
+}
+
+
     /* <!-- uitleg: showScreen verbergt alle <section> elementen en toont enkel het gevraagde scherm. -- */
     function showScreen(id) {
       document.querySelectorAll("body > section").forEach(sec => sec.style.display = "none");
@@ -433,7 +446,6 @@ if (q.image) {
   questionEl.innerText = q.question;
   questionImg.style.display = "none";
 }
-
 
   // Antwoorden (tekst of foto)
   q.answers.forEach((ans, i) => {
