@@ -422,7 +422,7 @@ if (q.image) {
   questionEl.innerText = q.question;
   questionImg.src = q.image;
   questionImg.style.display = "block";
-} else if (q.question.startsWith("http")) {
+} else if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
   // Patronen: vraag zelf is een foto
   questionEl.innerText = "";
   questionImg.src = q.question;
@@ -673,50 +673,51 @@ const patronenVragen = [
   { 
     question: "img patronen/vraag 2/cijferreeks 2.png", 
     answers: [
-      "img patronen/vraag 2/2 part 1 goed.png",
-      "img patronen/vraag 2/2 part 2.png",
-      "img patronen/vraag 2/2 part 3.png",
-      "img patronen/vraag 2/2 part 4.png"
+      "img patronen/vraag 2/2_part_1_goed.png",
+      "img patronen/vraag 2/2_part_2.png",
+      "img patronen/vraag 2/2_part_3.png",
+      "img patronen/vraag 2/2_part_4.png"
     ],
     correct: 0
   },
   { 
     question: "img patronen/vraag 3/cijferreeks 3.png", 
     answers: [
-      "img patronen/vraag 3/3 part 1.png",
-      "img patronen/vraag 3/3 part 2 goed.png",
-      "img patronen/vraag 3/3 part 3.png",
-      "img patronen/vraag 3/3 part 4.png"
+      "img patronen/vraag 3/3_part_1.png",
+      "img patronen/vraag 3/3_part_2_goed.png",
+      "img patronen/vraag 3/3_part_3.png",
+      "img patronen/vraag 3/3_part_4.png"
+   
     ],
     correct: 1
   },
   { 
     question: "img patronen/vraag 4/patronenreeks 4.png", 
     answers: [
-      "img patronen/vraag 4/4 part 1.png",
-      "img patronen/vraag 4/4 part 2.png",
-      "img patronen/vraag 4/4 part 3.png",
-      "img patronen/vraag 4/4 part 4 goed.png"
+      "img patronen/vraag 4/4_part_1.png",
+      "img patronen/vraag 4/4_part_2.png",
+      "img patronen/vraag 4/4_part_3.png",
+      "img patronen/vraag 4/4_part_4_goed.png"
     ],
     correct: 3
   },
   { 
     question: "img patronen/vraag 5/patronenreeks5.png", 
     answers: [
-      "img patronen/vraag 5/5 part 1.png",
-      "img patronen/vraag 5/5 part 2.png",
-      "img patronen/vraag 5/5 part 3.png",
-      "img patronen/vraag 5/5 part 4 goed.png"
+      "img patronen/vraag 5/5_part_1.png",
+      "img patronen/vraag 5/5_part_2.png",
+      "img patronen/vraag 5/5_part_3.png",
+      "img patronen/vraag 5/5_part_4_goed.png"
     ],
     correct: 3
   },
   { 
     question: "img patronen/vraag 6/patronenreeks6.png", 
     answers: [
-      "img patronen/vraag 6/6 part 1 goed.png",
-      "img patronen/vraag 6/6 part 2.png",
-      "img patronen/vraag 6/6 part 3.png",
-      "img patronen/vraag 6/6 part 4.png"
+      "img patronen/vraag 6/6_part_1_goed.png",
+      "img patronen/vraag 6/6_part_2.png",
+      "img patronen/vraag 6/6_part_3.png",
+      "img patronen/vraag 6/6_part_4.png"
     ],
     correct: 0
   },
