@@ -196,54 +196,40 @@
     }
 
     /* Alleen voor thema patronen */
+/* Alleen voor thema patronen */
 .quiz-patronen .answers {
   display: grid;
-  grid-template-columns: 1fr 1fr;   /* twee kolommen */
-  grid-template-rows: 1fr 1fr;      /* twee rijen */
-  gap: 20px;
-  padding: 20px;
-  height: 100%; /* vult de beschikbare hoogte */
+  grid-template-columns: 1fr 1fr;   /* 2 kolommen */
+  gap: 15px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 700px;                 /* iets breder zodat je geen scroll krijgt */
 }
 
 .quiz-patronen .answers button {
-  aspect-ratio: 1 / 1;       /* maakt ze vierkant */
+  aspect-ratio: 1 / 1;              /* maakt vierkant */
   width: 100%;
-  height: auto;
   padding: 0;
-  overflow: hidden;
   border-radius: 12px;
+  overflow: hidden;
 }
 
 .quiz-patronen .answers button img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* vult de blokken zonder witte randen */
+  object-fit: cover;                /* vult de blokken zonder randen */
   display: block;
 }
 
+/* Vraagfoto in patronen: groot en duidelijk */
 .quiz-patronen #question-img {
-  width: 90%;           /* foto veel breder */
-  max-width: 800px;     /* voorkomt dat foto te groot wordt */
+  width: 100%;
+  max-width: 900px;                 /* 2x groter dan default */
   height: auto;
   margin: 0 auto 20px auto;
   display: block;
 }
 
-
-.quiz-patronen .answers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 kolommen */
-  grid-auto-rows: 1fr;                   /* vierkante blokken */
-  gap: 15px;
-  max-width: 500px;                       /* voorkomt scrollen */
-  margin: 0 auto;                         /* gecentreerd */
-}
-
-.quiz-patronen .answers button {
-  aspect-ratio: 1 / 1;  /* altijd vierkant */
-  font-size: 1rem;
-  padding: 0;
-}
 
 
     /* Responsief tot 800px */
@@ -436,15 +422,16 @@ if (q.image) {
 
 
   // Antwoorden (tekst of foto)
-  q.answers.forEach((ans, i) => {
-    const btn = document.getElementById("btn"+i);
-    if (ans.startsWith("http")) {
-      btn.innerHTML = `<img src="${ans}" alt="Answer ${i}" />`;
-    } else {
-      btn.innerHTML = ans;
-    }
-    btn.onclick = () => selectAnswer(i);
-  });
+ q.answers.forEach((ans, i) => {
+  const btn = document.getElementById("btn"+i);
+  // Als het een afbeeldingsbestand is (jpg, png, gif)
+  if (ans.match(/\.(png|jpg|jpeg|gif)$/i)) {
+    btn.innerHTML = `<img src="${ans}" alt="Answer ${i}" />`;
+  } else {
+    btn.innerHTML = ans;
+  }
+});
+
 
   // Timer reset
   timeLeft = 15;
@@ -647,109 +634,109 @@ const rugbyVragen = [
   }
 ];
 
-
-    const patronenVragen = [
+const patronenVragen = [
   { 
-    question: "https://lh3.googleusercontent.com/d/1mv3ouSEZTmp-7XNmwfvJOEEX5ShjEcrZ", 
-    answers: [
-      "https://lh3.googleusercontent.com/d/18U_dXUWjkGW23wW-lw1hJqalIrJcOnLV",
-      "https://lh3.googleusercontent.com/d/1i7yuTIxfBCPKVstnpx8CQFgmNARni6-e",
-      "https://lh3.googleusercontent.com/d/1xO3o9oaqKXRCtUsPx3kp-XKY5nc2OiuQ",
-      "https://lh3.googleusercontent.com/d/1h9HUsMX_tf38L8_zCOsAUQacgAsd3Hqk"
-    ],
-    correct: 2
-  },
+  question: "img patronen/vraag 1/cijferreeks_1.png", 
+  answers: [
+    "img patronen/vraag 1/1_part_1.png",
+    "img patronen/vraag 1/1_part_2.png",
+    "img patronen/vraag 1/1_part_3_goed.png",
+    "img patronen/vraag 1/1_part_4.png"
+  ],
+  correct: 2
+},
   { 
-    question: "https://lh3.googleusercontent.com/d/1G4lmeoFHinmpdW5SZTa9JjL1iNVOFisb", 
+    question: "img patronen/vraag 2/cijferreeks 2.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1YxQqL4-84j_0KhNn34RPoVeC__0n4Gzw",
-      "https://lh3.googleusercontent.com/d/16pZg3y3t99VtqTvuEsbfY1jbJOX3WCtD",
-      "https://lh3.googleusercontent.com/d/1D-bpWkRIPkrzNTghtoDWqKSGkTrEf_Fb",
-      "https://lh3.googleusercontent.com/d/1VI1ejJhRRFRxCmJuYaY6ZbuuQj-gz0Pg"
+      "img patronen/vraag 2/2 part 1 goed.png",
+      "img patronen/vraag 2/2 part 2.png",
+      "img patronen/vraag 2/2 part 3.png",
+      "img patronen/vraag 2/2 part 4.png"
     ],
     correct: 0
   },
   { 
-    question: "https://lh3.googleusercontent.com/d/1J_4jFAPtpQ-eahxrowIMqxe7Uqn80kLI", 
+    question: "img patronen/vraag 3/cijferreeks 3.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1S8-Ovdtn7kKf58ypz5oIrtdghxBOhG8H",
-      "https://lh3.googleusercontent.com/d/1RZmeZcxXMFAbyUkQk9dxutPjjxFg716F",
-      "https://lh3.googleusercontent.com/d/1RXOMXZPypt5U34j-pxsmutjqEUYwJDee",
-      "https://lh3.googleusercontent.com/d/1e3WawjMufk3J8zScr1Svh0x4TWkoX1Qv"
+      "img patronen/vraag 3/3 part 1.png",
+      "img patronen/vraag 3/3 part 2 goed.png",
+      "img patronen/vraag 3/3 part 3.png",
+      "img patronen/vraag 3/3 part 4.png"
     ],
     correct: 1
   },
   { 
-    question: "https://lh3.googleusercontent.com/d/1WbpxTQ0rmEnLAB4lPNbNBC3veuyOBbcc", 
+    question: "img patronen/vraag 4/patronenreeks 4.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/14lad1zYDB4TQGDNqzCC89-tcESplofkY",
-      "https://lh3.googleusercontent.com/d/1xQgEvQqXxuQN9p1K7kEVygqUFz-tD0BL",
-      "https://lh3.googleusercontent.com/d/1MkYGaMv-cAUVwn14Ga0gkF3keSClT7v2",
-      "https://lh3.googleusercontent.com/d/16PUFRcLZRdXT9LdG73AFDX5swHd2aQbX"
+      "img patronen/vraag 4/4 part 1.png",
+      "img patronen/vraag 4/4 part 2.png",
+      "img patronen/vraag 4/4 part 3.png",
+      "img patronen/vraag 4/4 part 4 goed.png"
     ],
     correct: 3
   },
   { 
-    question: "https://lh3.googleusercontent.com/d/1TZJIt7lMIAhpsfaQWKLpN2xfzK9A0V6J", 
+    question: "img patronen/vraag 5/patronenreeks5.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1UZBDW6bf1dGDhKcwxROyIXyCOg4lb71c",
-      "https://lh3.googleusercontent.com/d/1YSk5Px-z6oKvIrDPgPW-GIukKDTo0j8v",
-      "https://lh3.googleusercontent.com/d/1DHi6ryVcjT35hXXOy19nTEtOjBZ4yGFO",
-      "https://lh3.googleusercontent.com/d/1KlwjvQ5AWxSpwTsrI2c77dY0JeQHegao"
+      "img patronen/vraag 5/5 part 1.png",
+      "img patronen/vraag 5/5 part 2.png",
+      "img patronen/vraag 5/5 part 3.png",
+      "img patronen/vraag 5/5 part 4 goed.png"
     ],
     correct: 3
   },
   { 
-    question: "https://lh3.googleusercontent.com/d/1ebDdySa4j8ESbebOaOXTCBYLESnNVXlP", 
+    question: "img patronen/vraag 6/patronenreeks6.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/10zVQQwPMLvChuK-O1gB3vW39m2kQ8qpa",
-      "https://lh3.googleusercontent.com/d/1tWIps4spMEJsrL-UvPH30dNoxKGbnc4Q",
-      "https://lh3.googleusercontent.com/d/19d5S6YJiJT4h304MzqBUTQkhDN8qYr4a",
-      "https://lh3.googleusercontent.com/d/1e3kMVRRejJJakG0slwh30TNcU9Fd8SVd"
+      "img patronen/vraag 6/6 part 1 goed.png",
+      "img patronen/vraag 6/6 part 2.png",
+      "img patronen/vraag 6/6 part 3.png",
+      "img patronen/vraag 6/6 part 4.png"
     ],
     correct: 0
   },
   { 
     question: "Diagram. Frankrijk - Europa - Azië", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1Yg3M-31JjkKfpDmjvCUaz2MWF8KB05to",
-      "https://lh3.googleusercontent.com/d/1NiaL0vKh8vAAVNN2pD33x6C2bwUPMKzY",
-      "https://lh3.googleusercontent.com/d/1bTtO6UMRBYjuPm1nq0CDjpFaBK0wkBgp",
-      "https://lh3.googleusercontent.com/d/1w0vqx8cF_2-p57DorfUX8NZtWmGYOske"
+      "img patronen/vraag 7/Diagram1.png",
+      "img patronen/vraag 7/7 part 2.png",
+      "img patronen/vraag 7/7 part 3.png",
+      "img patronen/vraag 7/7 part 4.png"
     ],
     correct: 0
   },
   { 
     question: "Diagram. Dieren - Vogels - Meeuwen", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1hFQaKeSl8LyMFl8vmUq6NvGkluYPQlN3",
-      "https://lh3.googleusercontent.com/d/1U0s6ER01Q0z1Nxk6CJ2hFWfC_hdnUYHx",
-      "https://lh3.googleusercontent.com/d/1aGQ7Spbs2G8LTBBRsjuIjI1BQ_yzQhEm",
-      "https://lh3.googleusercontent.com/d/1ih0izPAfunjmWEGpleQrMovnPEmf-SVo"
+      "img patronen/vraag 8/Diagram 2.png",
+      "img patronen/vraag 8/8 part 2 goed.png",
+      "img patronen/vraag 8/8 part 3.png",
+      "img patronen/vraag 8/8 part 4.png"
     ],
     correct: 1
   },
   { 
     question: "Diagram. Insecten - Mug - Vlinder", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1TvNE3ANyH7Q2CGtzXOMpI-jrFC5akr1m",
-      "https://lh3.googleusercontent.com/d/1In3-sFzTXhX_Y14m88sBsO2N4pkhqCC0",
-      "https://lh3.googleusercontent.com/d/18IpfnPbCwlIHVXgBek1ad_vGoRa6vx5Y",
-      "https://lh3.googleusercontent.com/d/1oQv96sqtAThiHyRi9zHo32hAjr-1xW8r"
+      "img patronen/vraag 9/Diagram3.png",
+      "img patronen/vraag 9/9 part 2.png",
+      "img patronen/vraag 9/9 part 3 goed.png",
+      "img patronen/vraag 9/9 part 4.png"
     ],
     correct: 2
   },
   { 
-    question: "https://lh3.googleusercontent.com/d/1SCRLrPeSrpy2-u_hTvKqiKPFbgBXMH3s", 
+    question: "img patronen/vraag 10/doospatroon.png", 
     answers: [
-      "https://lh3.googleusercontent.com/d/1CPQLkz4TSWuJXdNbLJ4zDBLYlb5u1BLh",
-      "https://lh3.googleusercontent.com/d/1cWQkhGfPx-Xkx4pe5Wpo69DpErde5xe4",
-      "https://lh3.googleusercontent.com/d/1q73ZrATTUOynWkBMmR-Ho2OMAhCV4UaW",
-      "https://lh3.googleusercontent.com/d/158ZdKfYgpVbBaYTurfT0aue4s7Lbj9ES"
+      "img patronen/vraag 10/10 part 1 goed.png",
+      "img patronen/vraag 10/10 part 2.png",
+      "img patronen/vraag 10/10 part 3.png",
+      "img patronen/vraag 10/10 part 4.png"
     ],
     correct: 0
   }
 ];
+
 
 
     // Toon startscherm bij laden (veiligheid)
