@@ -433,16 +433,29 @@ if (q.image) {
   questionImg.style.display = "none";
 }
 
-  // Antwoorden (tekst of foto)
- q.answers.forEach((ans, i) => {
+q.answers.forEach((ans, i) => {
   const btn = document.getElementById("btn"+i);
-  // Als het een afbeeldingsbestand is (jpg, png, gif)
+
+  // Verwijder eventuele oude inhoud
+  btn.innerHTML = "";
+
+  // Voeg tekst of afbeelding toe
   if (ans.match(/\.(png|jpg|jpeg|gif)$/i)) {
-    btn.innerHTML = `<img src="${ans}" alt="Answer ${i}" />`;
+    const img = document.createElement("img");
+    img.src = ans;
+    img.alt = `Answer ${i}`;
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    btn.appendChild(img);
   } else {
-    btn.innerHTML = ans;
+    btn.innerText = ans;
   }
+
+  // Event handler toevoegen op de knop zelf
+  btn.onclick = () => selectAnswer(i);
 });
+
 
 
   // Timer reset
