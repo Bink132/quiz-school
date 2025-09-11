@@ -195,6 +195,57 @@
       transform: scale(1.1);
     }
 
+    /* Alleen voor thema patronen */
+.quiz-patronen .answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* twee kolommen */
+  grid-template-rows: 1fr 1fr;      /* twee rijen */
+  gap: 20px;
+  padding: 20px;
+  height: 100%; /* vult de beschikbare hoogte */
+}
+
+.quiz-patronen .answers button {
+  aspect-ratio: 1 / 1;       /* maakt ze vierkant */
+  width: 100%;
+  height: auto;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.quiz-patronen .answers button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* vult de blokken zonder witte randen */
+  display: block;
+}
+
+.quiz-patronen #question-img {
+  width: 90%;           /* foto veel breder */
+  max-width: 800px;     /* voorkomt dat foto te groot wordt */
+  height: auto;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+
+.quiz-patronen .answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 kolommen */
+  grid-auto-rows: 1fr;                   /* vierkante blokken */
+  gap: 15px;
+  max-width: 500px;                       /* voorkomt scrollen */
+  margin: 0 auto;                         /* gecentreerd */
+}
+
+.quiz-patronen .answers button {
+  aspect-ratio: 1 / 1;  /* altijd vierkant */
+  font-size: 1rem;
+  padding: 0;
+}
+
+
     /* Responsief tot 800px */
     @media (max-width: 800px) {
       .quiz-title { font-size: 22px; }
@@ -319,21 +370,33 @@
     });
 
     /* <!-- uitleg: startQuiz kiest de juiste vragenlijst op basis van thema, reset toestanden en start de quiz.*/
-    function startQuiz(thema) {
-      currentQuiz = thema;
-      if (thema === "psychologie") quizData = psychologieVragen;
-      else if (thema === "rugby") quizData = rugbyVragen;
-      else if (thema === "patronen") quizData = patronenVragen;
-      else { alert("Dit thema is nog niet beschikbaar."); return; }
+function startQuiz(thema) {
+  currentQuiz = thema;
 
-      shuffledQuizData = shuffle([...quizData]); // kopie en schudden
-      currentQuestion = 0;
-      score = 0;
-      userAnswers = [];
-      document.getElementById("quiz-teamnaam").innerText = spelerNaam;
-      showScreen("quiz-scherm");
-      loadQuestion();
-    }
+  // Thema-quiz data laden
+  if (thema === "psychologie") quizData = psychologieVragen;
+  else if (thema === "rugby") quizData = rugbyVragen;
+  else if (thema === "patronen") quizData = patronenVragen;
+  else { alert("Dit thema is nog niet beschikbaar."); return; }
+
+  // --------------------------
+  // Patronen-specifieke class
+  const quizContainer = document.getElementById("quiz-container");
+  quizContainer.classList.remove("quiz-patronen"); // reset altijd
+  if (thema === "patronen") {
+    quizContainer.classList.add("quiz-patronen");
+  }
+  // --------------------------
+
+  shuffledQuizData = shuffle([...quizData]); 
+  currentQuestion = 0;
+  score = 0;
+  userAnswers = [];
+  document.getElementById("quiz-teamnaam").innerText = spelerNaam;
+  showScreen("quiz-scherm");
+  loadQuestion();
+}
+
 
     /* <!-- uitleg: shuffle gebruikt Fisher-Yates om willekeurige volgorde te maken. */
     function shuffle(array) {
@@ -344,39 +407,59 @@
       return array;
     }
 
-    /* <!-- uitleg: loadQuestion toont huidige vraag, koppelt antwoorden aan knoppen en (her)start de timer. */
-    function loadQuestion() {
-      // Als alle vragen klaar: resultaten tonen
-      if (currentQuestion >= shuffledQuizData.length) {
-        showResult();
-        return;
-      }
-      const q = shuffledQuizData[currentQuestion];
-      document.getElementById('question').innerText = q.question || "";
-      document.getElementById('question-img').src = q.image || "";
+function loadQuestion() {
+  if (currentQuestion >= shuffledQuizData.length) {
+    showResult();
+    return;
+  }
+  const q = shuffledQuizData[currentQuestion];
 
-      // Plaats antwoorden op knoppen en maak click handlers
-      q.answers.forEach((ans, i) => {
-        const btn = document.getElementById("btn"+i);
-        btn.innerText = ans;
-        // verwijder oude oncliks (veiligheidsmaatregel) en zet nieuwe
-        btn.onclick = null;
-        btn.onclick = () => selectAnswer(i);
-      });
+  const questionEl = document.getElementById('question');
+  const questionImg = document.getElementById('question-img');
 
-      // Timer (15 seconden)
-      timeLeft = 15;
-      document.getElementById("timer").innerText = timeLeft;
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById("timer").innerText = timeLeft;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          selectAnswer(-1); // geen antwoord gegeven
-        }
-      }, 1000);
+// Vraag: tekst of foto?
+if (q.image) {
+  // Rugby / Psychologie: tekst + aparte foto
+  questionEl.innerText = q.question;
+  questionImg.src = q.image;
+  questionImg.style.display = "block";
+} else if (q.question.startsWith("http")) {
+  // Patronen: vraag zelf is een foto
+  questionEl.innerText = "";
+  questionImg.src = q.question;
+  questionImg.style.display = "block";
+} else {
+  // Pure tekstvraag (geen foto)
+  questionEl.innerText = q.question;
+  questionImg.style.display = "none";
+}
+
+
+  // Antwoorden (tekst of foto)
+  q.answers.forEach((ans, i) => {
+    const btn = document.getElementById("btn"+i);
+    if (ans.startsWith("http")) {
+      btn.innerHTML = `<img src="${ans}" alt="Answer ${i}" />`;
+    } else {
+      btn.innerHTML = ans;
     }
+    btn.onclick = () => selectAnswer(i);
+  });
+
+  // Timer reset
+  timeLeft = 15;
+  document.getElementById("timer").innerText = timeLeft;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").innerText = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      selectAnswer(-1);
+    }
+  }, 1000);
+}
+
 
     /* <!-- uitleg: selectAnswer verwerkt het gekozen antwoord, slaat het resultaat op en laadt volgende vraag.*/
     function selectAnswer(selected) {
@@ -566,11 +649,108 @@ const rugbyVragen = [
 
 
     const patronenVragen = [
-      { question: "Welke figuur hoort in het lege vak?", image: "img/img-patronen/patroon1.png", answers: ["A", "B", "C", "D"], correct: 2 },
-      { question: "Wat is het volgende cijfer in de reeks: 2, 4, 8, 16, ...?", image: "img/img-patronen/reeks.png", answers: ["18", "24", "32", "64"], correct: 2 },
-      { question: "Welke vorm past het best bij de symmetrie?", image: "img/img-patronen/symmetrie.png", answers: ["Vierkant", "Driehoek", "Cirkel", "Rechthoek"], correct: 0 },
-      // je kunt hier extra vragen toevoegen zoals eerder
-    ];
+  { 
+    question: "https://lh3.googleusercontent.com/d/1mv3ouSEZTmp-7XNmwfvJOEEX5ShjEcrZ", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/18U_dXUWjkGW23wW-lw1hJqalIrJcOnLV",
+      "https://lh3.googleusercontent.com/d/1i7yuTIxfBCPKVstnpx8CQFgmNARni6-e",
+      "https://lh3.googleusercontent.com/d/1xO3o9oaqKXRCtUsPx3kp-XKY5nc2OiuQ",
+      "https://lh3.googleusercontent.com/d/1h9HUsMX_tf38L8_zCOsAUQacgAsd3Hqk"
+    ],
+    correct: 2
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1G4lmeoFHinmpdW5SZTa9JjL1iNVOFisb", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1YxQqL4-84j_0KhNn34RPoVeC__0n4Gzw",
+      "https://lh3.googleusercontent.com/d/16pZg3y3t99VtqTvuEsbfY1jbJOX3WCtD",
+      "https://lh3.googleusercontent.com/d/1D-bpWkRIPkrzNTghtoDWqKSGkTrEf_Fb",
+      "https://lh3.googleusercontent.com/d/1VI1ejJhRRFRxCmJuYaY6ZbuuQj-gz0Pg"
+    ],
+    correct: 0
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1J_4jFAPtpQ-eahxrowIMqxe7Uqn80kLI", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1S8-Ovdtn7kKf58ypz5oIrtdghxBOhG8H",
+      "https://lh3.googleusercontent.com/d/1RZmeZcxXMFAbyUkQk9dxutPjjxFg716F",
+      "https://lh3.googleusercontent.com/d/1RXOMXZPypt5U34j-pxsmutjqEUYwJDee",
+      "https://lh3.googleusercontent.com/d/1e3WawjMufk3J8zScr1Svh0x4TWkoX1Qv"
+    ],
+    correct: 1
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1WbpxTQ0rmEnLAB4lPNbNBC3veuyOBbcc", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/14lad1zYDB4TQGDNqzCC89-tcESplofkY",
+      "https://lh3.googleusercontent.com/d/1xQgEvQqXxuQN9p1K7kEVygqUFz-tD0BL",
+      "https://lh3.googleusercontent.com/d/1MkYGaMv-cAUVwn14Ga0gkF3keSClT7v2",
+      "https://lh3.googleusercontent.com/d/16PUFRcLZRdXT9LdG73AFDX5swHd2aQbX"
+    ],
+    correct: 3
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1TZJIt7lMIAhpsfaQWKLpN2xfzK9A0V6J", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1UZBDW6bf1dGDhKcwxROyIXyCOg4lb71c",
+      "https://lh3.googleusercontent.com/d/1YSk5Px-z6oKvIrDPgPW-GIukKDTo0j8v",
+      "https://lh3.googleusercontent.com/d/1DHi6ryVcjT35hXXOy19nTEtOjBZ4yGFO",
+      "https://lh3.googleusercontent.com/d/1KlwjvQ5AWxSpwTsrI2c77dY0JeQHegao"
+    ],
+    correct: 3
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1ebDdySa4j8ESbebOaOXTCBYLESnNVXlP", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/10zVQQwPMLvChuK-O1gB3vW39m2kQ8qpa",
+      "https://lh3.googleusercontent.com/d/1tWIps4spMEJsrL-UvPH30dNoxKGbnc4Q",
+      "https://lh3.googleusercontent.com/d/19d5S6YJiJT4h304MzqBUTQkhDN8qYr4a",
+      "https://lh3.googleusercontent.com/d/1e3kMVRRejJJakG0slwh30TNcU9Fd8SVd"
+    ],
+    correct: 0
+  },
+  { 
+    question: "Diagram. Frankrijk - Europa - Azië", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1Yg3M-31JjkKfpDmjvCUaz2MWF8KB05to",
+      "https://lh3.googleusercontent.com/d/1NiaL0vKh8vAAVNN2pD33x6C2bwUPMKzY",
+      "https://lh3.googleusercontent.com/d/1bTtO6UMRBYjuPm1nq0CDjpFaBK0wkBgp",
+      "https://lh3.googleusercontent.com/d/1w0vqx8cF_2-p57DorfUX8NZtWmGYOske"
+    ],
+    correct: 0
+  },
+  { 
+    question: "Diagram. Dieren - Vogels - Meeuwen", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1hFQaKeSl8LyMFl8vmUq6NvGkluYPQlN3",
+      "https://lh3.googleusercontent.com/d/1U0s6ER01Q0z1Nxk6CJ2hFWfC_hdnUYHx",
+      "https://lh3.googleusercontent.com/d/1aGQ7Spbs2G8LTBBRsjuIjI1BQ_yzQhEm",
+      "https://lh3.googleusercontent.com/d/1ih0izPAfunjmWEGpleQrMovnPEmf-SVo"
+    ],
+    correct: 1
+  },
+  { 
+    question: "Diagram. Insecten - Mug - Vlinder", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1TvNE3ANyH7Q2CGtzXOMpI-jrFC5akr1m",
+      "https://lh3.googleusercontent.com/d/1In3-sFzTXhX_Y14m88sBsO2N4pkhqCC0",
+      "https://lh3.googleusercontent.com/d/18IpfnPbCwlIHVXgBek1ad_vGoRa6vx5Y",
+      "https://lh3.googleusercontent.com/d/1oQv96sqtAThiHyRi9zHo32hAjr-1xW8r"
+    ],
+    correct: 2
+  },
+  { 
+    question: "https://lh3.googleusercontent.com/d/1SCRLrPeSrpy2-u_hTvKqiKPFbgBXMH3s", 
+    answers: [
+      "https://lh3.googleusercontent.com/d/1CPQLkz4TSWuJXdNbLJ4zDBLYlb5u1BLh",
+      "https://lh3.googleusercontent.com/d/1cWQkhGfPx-Xkx4pe5Wpo69DpErde5xe4",
+      "https://lh3.googleusercontent.com/d/1q73ZrATTUOynWkBMmR-Ho2OMAhCV4UaW",
+      "https://lh3.googleusercontent.com/d/158ZdKfYgpVbBaYTurfT0aue4s7Lbj9ES"
+    ],
+    correct: 0
+  }
+];
+
 
     // Toon startscherm bij laden (veiligheid)
     showScreen("start-scherm");
