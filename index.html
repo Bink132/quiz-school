@@ -11,242 +11,296 @@
        Hier staat jouw originele inline CSS (hersteld)
        ---------------------------------------------- */
     /* Quiz- en eindscherm extra styles */
-    #quiz-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-    }
-    #question {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
-      text-align: center;
-      padding: 20px;
-    }
-    #middle {
-      flex: 2;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
-    #timer {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background-color: red;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2em;
-      font-weight: bold;
-    }
-    .answers {
-      flex: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 20px;
-      padding: 20px;
-    }
-    .answers button {
-      font-size: 1.5em;
-      padding: 20px;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    #btn0 { background-color: #f44336; }
-    #btn1 { background-color: #4caf50; }
-    #btn2 { background-color: #2196f3; }
-    #btn3 { background-color: #ff9800; }
+/* ------------------------------
+   Algemeen Quiz Styling
+   ------------------------------ */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px;
+  margin: 0;
+  background-color: #fff;
+  color: #000;
+}
 
-    .result-box {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 5px;
-      background: #f9f9f9;
-    }
-    .correct { color: green; font-weight: bold; }
-    .wrong { color: red; font-weight: bold; }
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
+p {
+  padding-bottom: 50px;
+}
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      padding-bottom: 30px;
-    }
-    p {
-      padding-bottom: 50px;
-    }
+button {
+  margin-top: 10px;
+  padding: 12px 80px;
+  font-size: 1rem;
+  background-color: #3b4cca;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    label {
-      padding-bottom: 30px;
-      padding-right: 100px;
-    }
+button:hover {
+  background-color: #2a36a3;
+}
 
-    button {
-      margin-top: 10px;
-      padding: 12px 80px;
-      font-size: 1rem;
-      background-color: #3b4cca;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+input {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  width: 250px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
 
-    button:hover {
-      background-color: #2a36a3;
-    }
+/* ------------------------------
+   Quiz Container
+   ------------------------------ */
+#quiz-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-    form {
-      margin-top: 20px;
-    }
+#question {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-align: center;
+  padding: 20px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-    }
+#middle {
+  flex: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
 
-    input {
-      display: block;
-      margin: 0 auto 20px auto;
-      padding: 10px;
-      width: 250px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-    }
+#timer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  font-weight: bold;
+  z-index: 10; /* zorgt dat hij altijd boven andere elementen ligt */
+}
 
-    /* dit is de thema css */
+.answers {
+  flex: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
 
-    /* Algemene body-styling */
-    .quiz-body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background-color: #fff;
-      color: #000;
-    }
+.answers button {
+  font-size: 1.5em;
+  padding: 20px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
-    /* Header bovenaan */
-    .quiz-header {
-      margin: 20px;
-    }
+#btn0 { background-color: #f44336; }
+#btn1 { background-color: #4caf50; }
+#btn2 { background-color: #2196f3; }
+#btn3 { background-color: #ff9800; }
 
-    .teamnaam {
-      display: flex;
-      justify-content: left;
-      font-style: italic;
-      font-size: 30px;
-    }
+/* Resultaat boxen */
+.result-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
 
-    /* Welkomstsectie */
-    .quiz-title {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.correct { color: green; font-weight: bold; }
+.wrong { color: red; font-weight: bold; }
 
-    .spelernaam {
-      font-style: italic;
-    }
+/* ------------------------------
+   Vraag afbeelding styling
+   ------------------------------ */
+#center-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
 
-    /* Container met quiz-opties */
-    .quiz-options {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
+#question-img {
+  display: block;
+  width: 80%;
+  max-width: 900px; /* gewenste maximale breedte */
+  height: 400px;     /* vaste hoogte */
+  object-fit: contain; /* hele afbeelding zichtbaar, geen bijsnijden */
+  margin: 20px auto;
+  border: 3px solid #3949ab;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background-color: #fff; /* optie: achtergrond als de afbeelding niet de hele box vult */
+}
 
-    /* Stijl voor de knoppen */
-    .quiz-button {
-      background-color: #3949ab;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      text-align: center;
-    }
 
-    .quiz-button:hover {
-      transform: scale(1.1);
-    }
+/* ------------------------------
+   Patronen quiz specifieke styling
+   ------------------------------ */
+/* Patronen quiz container */
+.quiz-patronen #middle {
+  display: flex;
+  flex-direction: column; /* afbeelding bovenaan, antwoorden daaronder */
+  align-items: center;
+  gap: 30px; /* ruimte tussen afbeelding en knoppen */
+}
 
-    /* Alleen voor thema patronen */
-/* Alleen voor thema patronen */
+/* Vraag afbeelding */
+.quiz-patronen #question-img {
+  width: 100%;          /* maximaal breedte binnen container */
+  max-width: 600px;     /* limiet voor grote schermen */
+  max-height: 400px;    /* niet groter dan 400px */
+  object-fit: contain;   /* hele afbeelding zichtbaar */
+  display: block;
+  margin: 0 auto;
+}
+
+/* Antwoordknoppen */
 .quiz-patronen .answers {
   display: grid;
-  grid-template-columns: 1fr 1fr;   /* 2 kolommen */
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
   margin: 0 auto;
-  width: 100%;
-  max-width: 700px;                 /* iets breder zodat je geen scroll krijgt */
 }
 
 .quiz-patronen .answers button {
-  aspect-ratio: 1 / 1;              /* maakt vierkant */
-  width: 100%;
-  padding: 0;
+  aspect-ratio: 1 / 1;
+  width: 150px;
+  height: 150px;
   border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .quiz-patronen .answers button img {
   width: 100%;
   height: 100%;
-  object-fit: cover;                /* vult de blokken zonder randen */
-  display: block;
-}
-
-/* Vraagfoto in patronen: groot en duidelijk */
-.quiz-patronen #question-img {
-  width: 100%;
-  max-width: 900px;                 /* 2x groter dan default */
-  height: auto;
-  margin: 0 auto 20px auto;
+  object-fit: cover;
   display: block;
 }
 
 
+/* ------------------------------
+   Header en quiz optie knoppen
+   ------------------------------ */
+.quiz-header {
+  margin: 20px;
+}
 
-    /* Responsief tot 800px */
-    @media (max-width: 800px) {
-      .quiz-title { font-size: 22px; }
-      .quiz-button {
-        width: 100px;
-        height: 100px;
-        font-size: 14px;
-      }
-    }
+.teamnaam {
+  display: flex;
+  justify-content: left;
+  font-style: italic;
+  font-size: 30px;
+}
 
-    /* quiz rugby pagina*/
-    .quiz-title-vraag {
-      display: flex;
-      justify-content: center;
-    }
+.quiz-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.quiz-button {
+  background-color: #3949ab;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.quiz-button:hover {
+  transform: scale(1.1);
+}
+.quiz-options {
+  display: flex;
+  justify-content: center; /* center horizontaal */
+  align-items: center;     /* center verticaal */
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: nowrap;       /* forceer naast elkaar */
+}
+
+.naam {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 40px; /* ruimte tussen label en input */
+}
+
+.naam-input {
+  display: block;
+  margin-bottom: 40px; /* ruimte tussen input en button */
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+#question-img {
+  width: 90% !important;       /* zo groot mogelijk binnen container */
+  max-width: 800px !important; /* limiet voor grote schermen */
+  height: auto !important;     /* hoogte past automatisch, verhouding behouden */
+  object-fit: contain !important; /* hele afbeelding zichtbaar, geen bijsnijden */
+  display: block !important;
+  margin: 20px auto !important;   /* centreren en ruimte onder afbeelding */
+}
+
+
+
+/* ------------------------------
+   Responsiviteit
+   ------------------------------ */
+@media (max-width: 800px) {
+  .quiz-title { font-size: 22px; }
+  .quiz-button {
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+  }
+  #question {
+    font-size: 1.5rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -264,11 +318,11 @@
     </i></p>
 
     <form id="naamForm">
-      <label for="naam">Wat is je naam?</label>
-      <input type="text" id="naam" name="naam" placeholder="je naam" required>
-      <br>
-      <button type="submit">Start quiz</button>
-    </form>
+  <label for="naam" class="naam">Wat is je naam?</label>
+  <input type="text" id="naam" name="naam" placeholder="je naam" required class="naam-input">
+  <button type="submit">Start quiz</button>
+</form>
+
   </section>
 
   <!-- Thema scherm -->
@@ -292,24 +346,34 @@
   </section>
 
   <!-- Quiz scherm -->
-  <section id="quiz-scherm" style="display:none;">
-    <div id="quiz-container">
-      <div id="question"></div>
-      <div id="middle">
-        <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
-        <div id="center-img-container">
-          <img id="question-img" src="" alt="Question image" style="max-width:200px; max-height:140px;">
-        </div>
-        <div id="timer"></div>
+<section id="quiz-scherm" style="display:none;">
+  <div id="quiz-container">
+    
+    <!-- Vraagtekst -->
+    <div id="question-text" style="font-size: 2rem; text-align: center; padding: 20px;"></div>
+    
+    <div id="middle">
+      <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
+      
+      <!-- Vraag afbeelding container -->
+      <div id="question-img-container" style="display:none; margin: 20px auto;">
+        <img id="question-img" src="" alt="Question image" style="max-width:90%; max-height:400px; object-fit:contain; border: 3px solid #3949ab; border-radius:12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
       </div>
-      <div class="answers">
-        <button id="btn0"></button>
-        <button id="btn1"></button>
-        <button id="btn2"></button>
-        <button id="btn3"></button>
-      </div>
+      
+      <div id="timer" style="width:100px; height:100px; border-radius:50%; background-color:red; color:white; display:flex; justify-content:center; align-items:center; font-size:2em; font-weight:bold;"></div>
     </div>
-  </section>
+    
+    <!-- Antwoordknoppen -->
+    <div class="answers" style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; padding:20px;">
+      <button id="btn0"></button>
+      <button id="btn1"></button>
+      <button id="btn2"></button>
+      <button id="btn3"></button>
+    </div>
+    
+  </div>
+</section>
+
 
   <!-- Eindscherm -->
   <section id="eind-scherm" style="display:none;">
@@ -411,54 +475,55 @@ function loadQuestion() {
     showResult();
     return;
   }
-  const q = shuffledQuizData[currentQuestion];
 
-  const questionEl = document.getElementById('question');
+  const q = shuffledQuizData[currentQuestion];
+  const questionTextEl = document.getElementById('question-text');
+  const questionImgContainer = document.getElementById('question-img-container');
   const questionImg = document.getElementById('question-img');
 
-// Vraag: tekst of foto?
-if (q.image) {
-  // Rugby / Psychologie: tekst + aparte foto
-  questionEl.innerText = q.question;
-  questionImg.src = q.image;
-  questionImg.style.display = "block";
-} else if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
-  // Patronen: vraag zelf is een foto
-  questionEl.innerText = "";
+  // Reset
+  questionTextEl.style.display = "none";
+  questionImgContainer.style.display = "none";
+  questionImg.src = "";
+
+  // Vraag is afbeelding (patronen of vraag eindigt op afbeelding extensie)
+ // Vraag is afbeelding als q.question een bestandspad naar afbeelding is
+if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
   questionImg.src = q.question;
-  questionImg.style.display = "block";
+  questionImgContainer.style.display = "block";
+  questionTextEl.style.display = "none";
 } else {
-  // Pure tekstvraag (geen foto)
-  questionEl.innerText = q.question;
-  questionImg.style.display = "none";
+  // gewone tekstvraag
+  questionTextEl.innerText = q.question;
+  questionTextEl.style.display = "block";
+  questionImgContainer.style.display = q.image ? "block" : "none";
+  if (q.image) {
+    questionImg.src = q.image;
+  } else {
+    questionImg.src = "";
+  }
 }
 
-q.answers.forEach((ans, i) => {
-  const btn = document.getElementById("btn"+i);
 
-  // Verwijder eventuele oude inhoud
-  btn.innerHTML = "";
+  // Antwoorden
+  q.answers.forEach((ans, i) => {
+    const btn = document.getElementById("btn"+i);
+    btn.innerHTML = "";
+    if (ans.match(/\.(png|jpg|jpeg|gif)$/i)) {
+      const img = document.createElement("img");
+      img.src = ans;
+      img.alt = `Answer ${i}`;
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "cover";
+      btn.appendChild(img);
+    } else {
+      btn.innerText = ans;
+    }
+    btn.onclick = () => selectAnswer(i);
+  });
 
-  // Voeg tekst of afbeelding toe
-  if (ans.match(/\.(png|jpg|jpeg|gif)$/i)) {
-    const img = document.createElement("img");
-    img.src = ans;
-    img.alt = `Answer ${i}`;
-    img.style.width = "100%";
-    img.style.height = "100%";
-    img.style.objectFit = "cover";
-    btn.appendChild(img);
-  } else {
-    btn.innerText = ans;
-  }
-
-  // Event handler toevoegen op de knop zelf
-  btn.onclick = () => selectAnswer(i);
-});
-
-
-
-  // Timer reset
+  // Timer
   timeLeft = 15;
   document.getElementById("timer").innerText = timeLeft;
   clearInterval(timerInterval);
@@ -471,6 +536,8 @@ q.answers.forEach((ans, i) => {
     }
   }, 1000);
 }
+
+
 
 
     /* <!-- uitleg: selectAnswer verwerkt het gekozen antwoord, slaat het resultaat op en laadt volgende vraag.*/
