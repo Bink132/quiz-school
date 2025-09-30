@@ -472,38 +472,34 @@ function startQuiz(thema) {
 
 function loadQuestion() {
   if (currentQuestion >= shuffledQuizData.length) {
-    showResult();
+    if (currentQuiz === "patronen") showResultPatronen();
+    else showResult();
     return;
-  }
+}
 
   const q = shuffledQuizData[currentQuestion];
   const questionTextEl = document.getElementById('question-text');
   const questionImgContainer = document.getElementById('question-img-container');
   const questionImg = document.getElementById('question-img');
+  const timerEl = document.getElementById('timer');
 
   // Reset
   questionTextEl.style.display = "none";
   questionImgContainer.style.display = "none";
   questionImg.src = "";
 
-  // Vraag is afbeelding (patronen of vraag eindigt op afbeelding extensie)
- // Vraag is afbeelding als q.question een bestandspad naar afbeelding is
-if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
-  questionImg.src = q.question;
-  questionImgContainer.style.display = "block";
-  questionTextEl.style.display = "none";
-} else {
-  // gewone tekstvraag
-  questionTextEl.innerText = q.question;
-  questionTextEl.style.display = "block";
-  questionImgContainer.style.display = q.image ? "block" : "none";
-  if (q.image) {
-    questionImg.src = q.image;
+  // Vraag tekst of afbeelding
+  if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
+    questionImg.src = q.question;
+    questionImgContainer.style.display = "block";
   } else {
-    questionImg.src = "";
+    questionTextEl.innerText = q.question;
+    questionTextEl.style.display = "block";
+    if (q.image) {
+      questionImg.src = q.image;
+      questionImgContainer.style.display = "block";
+    }
   }
-}
-
 
   // Antwoorden
   q.answers.forEach((ans, i) => {
@@ -525,11 +521,18 @@ if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
 
   // Timer
   timeLeft = 15;
-  document.getElementById("timer").innerText = timeLeft;
+  timerEl.innerText = timeLeft;
+  timerEl.style.backgroundColor = "gold"; // standaardkleur
+
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     timeLeft--;
-    document.getElementById("timer").innerText = timeLeft;
+    timerEl.innerText = timeLeft;
+
+    // Bonuspunt-range
+    if (timeLeft >= 10) timerEl.style.backgroundColor = "gold"; 
+    else timerEl.style.backgroundColor = "red";
+
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       selectAnswer(-1);
@@ -540,28 +543,96 @@ if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
 
 
 
-    /* <!-- uitleg: selectAnswer verwerkt het gekozen antwoord, slaat het resultaat op en laadt volgende vraag.*/
-    function selectAnswer(selected) {
-      clearInterval(timerInterval);
-      const q = shuffledQuizData[currentQuestion];
 
-      const chosenText = (selected >= 0 && q.answers[selected] !== undefined) ? q.answers[selected] : "Geen antwoord";
-      const correctText = q.answers[q.correct] || "Onbekend";
+function selectAnswer(selected) {
+  clearInterval(timerInterval);
+  const q = shuffledQuizData[currentQuestion];
 
-      const isCorrect = (selected === q.correct);
-      if (isCorrect) score++;
+  const chosenText = (selected >= 0 && q.answers[selected] !== undefined) ? q.answers[selected] : "Geen antwoord";
+  const correctText = q.answers[q.correct] || "Onbekend";
 
-      userAnswers.push({
-        question: q.question,
-        chosen: chosenText,
-        correct: correctText,
-        isCorrect: isCorrect
-      });
+  let isCorrect = (selected === q.correct);
+  let bonus = 0;
 
-      currentQuestion++;
-      // korte kleine vertraging (optioneel) kan toegevoegd worden; hier direct volgende vraag
-      loadQuestion();
-    }
+  if (isCorrect) {
+    score++; // standaardpunt
+    if (timeLeft >= 10) bonus = 1; // bonuspunt
+    score += bonus;
+  }
+
+  userAnswers.push({
+    question: q.question,
+    chosen: chosenText,
+    correct: correctText,
+    isCorrect: isCorrect,
+    bonus: bonus
+  });
+
+  currentQuestion++;
+  loadQuestion();
+}
+
+function showResultPatronen() {
+  showScreen("eind-scherm");
+  
+  const totalBonus = userAnswers.reduce((sum, ans) => sum + ans.bonus, 0);
+
+  document.getElementById("summary").innerHTML = `
+    <p>Gefeliciteerd <b>${spelerNaam}</b>, je hebt de patronenquiz afgerond.<br>
+    Je score is: <b>${score - totalBonus}</b> van <b>${shuffledQuizData.length}</b><br>
+    Bonuspunten: <b>${totalBonus}</b><br>
+    Totaal: <b>${score}</b></p>
+  `;
+
+  const scoreboard = document.getElementById("scoreboard");
+  scoreboard.innerHTML = "";
+  const data = [
+    {name: spelerNaam, points: score},
+    {name: "Anna", points: 8},
+    {name: "Piet", points: 6}
+  ];
+  data.forEach(d => {
+    const li = document.createElement("li");
+    li.innerHTML = `<i>${d.name}</i> — ${d.points} punten`;
+    scoreboard.appendChild(li);
+  });
+
+  const details = document.getElementById("details");
+  details.innerHTML = "";
+
+  // Toon alleen de correcte afbeeldingen/antwoorden, geen dubbele
+ userAnswers.forEach((res, i) => {
+  const box = document.createElement("div");
+  box.className = "result-box";
+
+  // Vraag afbeelding (als het een image-pad is)
+  let questionHTML = res.question.match(/\.(png|jpg|jpeg|gif)$/i)
+    ? `<img src="${res.question}" alt="Vraag ${i+1}" style="max-width:300px; display:block; margin:5px auto;">`
+    : res.question;
+
+  // Jouw antwoord
+  let chosenHTML = res.chosen.match(/\.(png|jpg|jpeg|gif)$/i)
+    ? `<img src="${res.chosen}" alt="Jouw antwoord" style="max-width:200px; display:block; margin:5px auto;">`
+    : res.chosen;
+
+  // Correct antwoord
+  let correctHTML = res.correct.match(/\.(png|jpg|jpeg|gif)$/i)
+    ? `<img src="${res.correct}" alt="Correct antwoord" style="max-width:200px; display:block; margin:5px auto;">`
+    : res.correct;
+
+  box.innerHTML = `
+    <p><b>Vraag ${i+1}:</b></p>
+    ${questionHTML} 
+    <p>Deze vraag had je: <span class="${res.isCorrect ? 'correct' : 'wrong'}">
+      ${res.isCorrect ? 'goed' : 'fout'}</span></p>
+    <p>Jouw antwoord: ${chosenHTML}</p>
+    <p>Het juiste antwoord: ${correctHTML}</p>
+    ${res.bonus ? `<p style="color:orange;"><b>Bonuspunt verdiend!</b></p>` : ""}
+  `;
+  details.appendChild(box);
+});
+
+}
 
     /* <!-- uitleg: showResult bouwt het eindscherm met score, een simpele scoreboard en gedetailleerde feedback per vraag. */
     function showResult() {
@@ -597,6 +668,42 @@ if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
         `;
         details.appendChild(box);
       });
+      
+const totalBonus = userAnswers.reduce((sum, ans) => sum + ans.bonus, 0);
+document.getElementById("summary").innerHTML = `
+  <p>Gefeliciteerd <b>${spelerNaam}</b>, je hebt de quiz afgerond.<br>
+  Je score is: <b>${score - totalBonus}</b> van <b>${shuffledQuizData.length}</b><br>
+  Bonuspunten: <b>${totalBonus}</b><br>
+  Totaal: <b>${score}</b></p>
+`;
+
+
+
+userAnswers.forEach((res, i) => {
+  const box = document.createElement("div");
+  box.className = "result-box";
+
+  // Jouw antwoord
+  let chosenHTML = res.chosen.match(/\.(png|jpg|jpeg|gif)$/i)
+    ? `<img src="${res.chosen}" alt="Jouw antwoord" style="max-width:200px; display:block; margin:5px auto;">`
+    : res.chosen;
+
+  // Correct antwoord
+  let correctHTML = res.correct.match(/\.(png|jpg|jpeg|gif)$/i)
+    ? `<img src="${res.correct}" alt="Correct antwoord" style="max-width:200px; display:block; margin:5px auto;">`
+    : res.correct;
+
+  box.innerHTML = `
+    <p><b>Vraag ${i+1}:</b> ${res.question}</p>
+    <p>Deze vraag had je: <span class="${res.isCorrect ? 'correct' : 'wrong'}">
+      ${res.isCorrect ? 'goed' : 'fout'}</span></p>
+    <p>Jouw antwoord: ${chosenHTML}</p>
+    <p>Het juiste antwoord: ${correctHTML}</p>
+    ${res.bonus ? `<p style="color:orange;"><b>Bonuspunt verdiend!</b></p>` : ""}
+  `;
+  details.appendChild(box);
+});
+
     }
 
 const psychologieVragen = [
