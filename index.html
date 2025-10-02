@@ -321,6 +321,10 @@ input {
   cursor: not-allowed;
 }
 
+section {
+  position: relative;
+  z-index: 1;
+}
 
 
 /* ------------------------------
@@ -341,6 +345,16 @@ input {
   </style>
 </head>
 <body>
+<video id="backgroundVideo" autoplay muted loop playsinline style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;">
+</video>
 
   <!-- Startscherm -->
   <section id="start-scherm">
@@ -454,6 +468,42 @@ input {
   showScreen("start-scherm");
 }
 
+// 🔹 Achtergrondvideo’s
+const backgroundVideo = document.getElementById("backgroundVideo");
+
+// Startscherm videos
+const startVideos = [
+  "vids/introBlauwe.mp4",
+  "vids/introGroene.mp4",
+  "vids/introRoze.mp4",
+  "vids/introscherm.mp4"
+];
+
+// Thema-specifieke videos
+const themeVideos = {
+  patronen: "vids/matrix.mp4",
+  rugby: "vids/redBackground.mp4",
+  psychologie: "vids/psychologyBackround.mp4"
+};
+
+// Kies één random startvideo bij eerste load
+function playRandomStartVideo() {
+  const randomIndex = Math.floor(Math.random() * startVideos.length);
+  backgroundVideo.src = startVideos[randomIndex];
+  backgroundVideo.play();
+}
+
+// Wissel achtergrond voor thema quiz
+function playThemeVideo(theme) {
+  backgroundVideo.src = themeVideos[theme];
+  backgroundVideo.play();
+}
+
+// Start bij laden
+window.addEventListener("load", () => {
+  playRandomStartVideo();
+  showScreen("start-scherm"); // behoud je huidige startscherm logica
+});
 
     /* <!-- uitleg: showScreen verbergt alle <section> elementen en toont enkel het gevraagde scherm. -- */
     function showScreen(id) {
@@ -495,6 +545,7 @@ function startQuiz(thema) {
   score = 0;
   userAnswers = [];
   document.getElementById("quiz-teamnaam").innerText = spelerNaam;
+  playThemeVideo(thema); // verandert achtergrond naar thema video
   showScreen("quiz-scherm");
   loadQuestion();
 }
