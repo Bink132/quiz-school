@@ -284,6 +284,43 @@ input {
   margin: 20px auto !important;   /* centreren en ruimte onder afbeelding */
 }
 
+/* Container voor de navigatie van vragen */
+#details {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.result-box {
+  display: none; /* standaard verborgen */
+}
+
+.result-box.active {
+  display: block; /* alleen de actieve tonen */
+}
+
+/* Navigatie pijlen */
+.nav-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.nav-arrows button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3b4cca;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-arrows button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
 
 
 /* ------------------------------
@@ -387,6 +424,8 @@ input {
     <h2>Hoe heb je het gedaan?</h2>
     <div id="details"></div>
   </section>
+
+  
 
   <!-- --------------------------------------------
        JavaScript - werkende, gestructureerde code
@@ -520,7 +559,7 @@ function loadQuestion() {
   });
 
   // Timer
-  timeLeft = 15;
+  timeLeft = 25;
   timerEl.innerText = timeLeft;
   timerEl.style.backgroundColor = "gold"; // standaardkleur
 
@@ -541,8 +580,47 @@ function loadQuestion() {
 }
 
 
+function setupResultNavigation() {
+  const boxes = document.querySelectorAll("#details .result-box");
+  let currentIndex = 0;
 
+  function showBox(index) {
+    boxes.forEach((box, i) => {
+      box.classList.toggle("active", i === index);
+    });
+    // Knoppen activeren/deactiveren
+    prevBtn.disabled = (index === 0);
+    nextBtn.disabled = (index === boxes.length - 1);
+  }
 
+  const nav = document.createElement("div");
+  nav.className = "nav-arrows";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.innerText = "← Vorige";
+  prevBtn.onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showBox(currentIndex);
+    }
+  };
+
+  const nextBtn = document.createElement("button");
+  nextBtn.innerText = "Volgende →";
+  nextBtn.onclick = () => {
+    if (currentIndex < boxes.length - 1) {
+      currentIndex++;
+      showBox(currentIndex);
+    }
+  };
+
+  nav.appendChild(prevBtn);
+  nav.appendChild(nextBtn);
+  document.getElementById("details").appendChild(nav);
+
+  // Start bij de eerste vraag
+  showBox(currentIndex);
+}
 
 function selectAnswer(selected) {
   clearInterval(timerInterval);
@@ -631,6 +709,7 @@ function showResultPatronen() {
   `;
   details.appendChild(box);
 });
+  setupResultNavigation();
 
 }
 
@@ -668,6 +747,7 @@ function showResultPatronen() {
         `;
         details.appendChild(box);
       });
+        setupResultNavigation();
       
 const totalBonus = userAnswers.reduce((sum, ans) => sum + ans.bonus, 0);
 document.getElementById("summary").innerHTML = `
@@ -676,6 +756,7 @@ document.getElementById("summary").innerHTML = `
   Bonuspunten: <b>${totalBonus}</b><br>
   Totaal: <b>${score}</b></p>
 `;
+
 
 
 
