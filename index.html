@@ -103,24 +103,6 @@ input {
   z-index: 10; /* zorgt dat hij altijd boven andere elementen ligt */
 }
 
-.answers {
-  flex: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-.answers button {
-  font-size: 1.5em;
-  padding: 20px;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
 #btn0 { background-color: #f44336; }
 #btn1 { background-color: #4caf50; }
 #btn2 { background-color: #2196f3; }
@@ -182,35 +164,6 @@ input {
   display: block;
   margin: 0 auto;
 }
-
-/* Antwoordknoppen */
-.quiz-patronen .answers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  width: max-content;
-  margin: 0 auto;
-}
-
-.quiz-patronen .answers button {
-  aspect-ratio: 1 / 1;
-  width: 150px;
-  height: 150px;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.quiz-patronen .answers button img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 
 /* ------------------------------
    Header en quiz optie knoppen
@@ -372,22 +325,6 @@ input, .naam-input {
   object-fit: contain;
 }
 
-/* Antwoorden rechts */
-.answers {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* verdeelt de 4 knoppen gelijk over de hoogte */
-  gap: 10px;
-}
-
-.answers button {
-  flex: 1; /* elk antwoord vult evenveel ruimte */
-  width: 100%;
-  min-height: 0; /* voorkomt dat flex te groot wordt */
-  font-size: calc(12px + 0.8vw);
-}
-
 /* Teamnaam en timer */
 #quiz-teamnaam {
   position: absolute;
@@ -416,6 +353,83 @@ input, .naam-input {
   font-weight: bold;
   z-index: 10;
 }
+/* -----------------------------
+   Standaard quiz layout (rugby & psychologie)
+   ----------------------------- */
+.quiz-standard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: calc(100vh - 40px); /* zorgt dat alles in viewport past */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Vraaggebied (boven tekst + afbeelding) */
+.quiz-standard #question-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+/* Vraagtekst */
+.quiz-standard #question-text {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Vraag afbeelding */
+.quiz-standard #question-img-container {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quiz-standard #question-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 3px solid #3949ab;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Timer en teamnaam */
+.quiz-standard #quiz-teamnaam {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.quiz-standard #timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 10;
+}
 
 /* Mobiel: afbeelding boven, antwoorden eronder */
 @media (max-width: 899px) {
@@ -427,20 +441,117 @@ input, .naam-input {
     max-height: 50vh;
     margin-bottom: 20px;
   }
-
-  .answers {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .answers button {
-    flex: 0 0 48%; /* 2 knoppen per rij */
-    min-height: 60px;
-  }
 }
 
+/* ======= Override / layout voor rugby & psychologie =======
+   - vraag boven afbeelding
+   - afbeelding links, antwoorden rechts (2x2)
+   - gelijke hoogte knoppen, geen extra ruimte in het midden
+   - teamnaam linksboven en timer rechtsboven blijven zichtbaar
+   - mobiel: afbeelding boven, knoppen onder (2x2)
+   ========================================================= */
+
+/* Zorg dat deze regels sterke specificiteit hebben om eerdere regels te overriden */
+/* Container voor quiz-standard */
+/* Container voor quiz-standard */
+/* Container quiz */
+/* Quiz grid voor rugby/psychologie */
+#quiz-container.quiz-standard {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Timer en teamnaam */
+#quiz-container.quiz-standard #quiz-teamnaam {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 50;
+}
+
+#quiz-container.quiz-standard #timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  z-index: 50;
+}
+
+/* Vraagtekst boven alles */
+#quiz-container.quiz-standard #question-text {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+/* Grid voor foto en antwoorden */
+#quiz-container.quiz-standard #quiz-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* foto links, antwoorden rechts */
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  align-items: stretch; /* foto en antwoorden even hoog */
+}
+
+/* Afbeelding */
+#quiz-container.quiz-standard #question-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#quiz-container.quiz-standard #question-img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 3px solid #3949ab;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Antwoorden 2x2 */
+#quiz-container.quiz-standard .answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 15px;
+}
+
+#quiz-container.quiz-standard .answers button {
+  width: 100%;
+  height: 100%;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobiel: afbeelding boven, antwoorden eronder */
+@media (max-width: 900px) {
+  #quiz-container.quiz-standard #quiz-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  #quiz-container.quiz-standard .answers {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}
 
 
   </style>
@@ -499,31 +610,29 @@ input, .naam-input {
 
   <!-- Quiz scherm -->
 <section id="quiz-scherm" style="display:none;">
-  <div id="quiz-container">
+<div id="quiz-container" class="quiz-standard">
+  <div id="question-text"></div>
 
-    <!-- Vraagtekst en afbeelding bovenaan -->
-    <div id="question-top">
-      <div id="question-text" style="font-size: 2rem; text-align: center; padding: 20px;"></div>
-      <div id="question-img-container" style="display:none; margin: 20px auto;">
-        <img id="question-img" src="" alt="Question image" style="max-width:90%; max-height:400px; object-fit:contain; border: 3px solid #3949ab; border-radius:12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-      </div>
+  <div id="quiz-main">
+    <div id="question-img-container">
+      <img id="question-img" src="" alt="Vraag afbeelding">
     </div>
 
-    <!-- Midden gedeelte: timer en teamnaam -->
-    <div id="middle">
-      <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
-      <div id="timer" style="width:100px; height:100px; border-radius:50%; background-color:red; color:white; display:flex; justify-content:center; align-items:center; font-size:2em; font-weight:bold;"></div>
-    </div>
-
-    <!-- Antwoordknoppen -->
-    <div class="answers" style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:20px; padding:20px;">
+    <div class="answers">
       <button id="btn0"></button>
       <button id="btn1"></button>
       <button id="btn2"></button>
       <button id="btn3"></button>
     </div>
-    
   </div>
+
+  <span class="teamnaam" id="quiz-teamnaam">[Teamnaam]</span>
+  <div id="timer"></div>
+</div>
+
+
+
+
 </section>
 
 
