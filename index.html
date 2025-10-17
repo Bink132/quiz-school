@@ -130,19 +130,6 @@ input {
   margin: 20px 0;
 }
 
-#question-img {
-  display: block;
-  width: 80%;
-  max-width: 900px; /* gewenste maximale breedte */
-  height: 400px;     /* vaste hoogte */
-  object-fit: contain; /* hele afbeelding zichtbaar, geen bijsnijden */
-  margin: 20px auto;
-  border: 3px solid #3949ab;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  background-color: #fff; /* optie: achtergrond als de afbeelding niet de hele box vult */
-}
-
 
 /* ------------------------------
    Patronen quiz specifieke styling
@@ -227,14 +214,6 @@ input {
   width: 250px;
   border-radius: 5px;
   border: 2px solid #ccc;
-}
-#question-img {
-  width: 90% !important;       /* zo groot mogelijk binnen container */
-  max-width: 800px !important; /* limiet voor grote schermen */
-  height: auto !important;     /* hoogte past automatisch, verhouding behouden */
-  object-fit: contain !important; /* hele afbeelding zichtbaar, geen bijsnijden */
-  display: block !important;
-  margin: 20px auto !important;   /* centreren en ruimte onder afbeelding */
 }
 
 /* Container voor de navigatie van vragen */
@@ -431,6 +410,20 @@ input, .naam-input {
   z-index: 10;
 }
 
+#question-img {
+  width: 90% !important;       
+  max-width: 800px !important; 
+  height: auto !important;     
+  object-fit: contain !important; 
+  display: block !important;
+  margin: 20px auto !important;   
+  border: 3px solid #3949ab;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background-color: #fff;
+}
+
+
 /* Mobiel: afbeelding boven, antwoorden eronder */
 @media (max-width: 899px) {
   #quiz-container:not(.quiz-patronen) {
@@ -572,7 +565,25 @@ input, .naam-input {
   }
 }
 
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 kolommen voor 2x2 blokken */
+  gap: 10px;                     /* afstand tussen blokken */
+  justify-items: center;          /* centreren van afbeeldingen in cellen */
+}
 
+.answers.centered {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 20px !important;
+  justify-items: center !important;
+  align-items: center !important;
+  place-items: center !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
 
   </style>
 </head>
@@ -772,7 +783,7 @@ function startQuiz(thema) {
   }
   // --------------------------
 
-  shuffledQuizData = shuffle([...quizData]); 
+  shuffledQuizData = shuffle ([...quizData]);                                              //shufle tussen = en ([...quizData]);   
   currentQuestion = 0;
   score = 0;
   userAnswers = [];
@@ -811,27 +822,52 @@ function loadQuestion() {
   questionImg.src = "";
 
   // Toon instructie boven afbeelding indien aanwezig
-  // Vraag tekst (altijd tonen)
-let questionText = "";
-if (q.instruction) {
-  questionText += q.instruction + "\n\n";
-}
-questionText += q.question;
-
-questionTextEl.innerText = questionText;
-questionTextEl.style.display = "block";
-
-// Vraag afbeelding
-if (q.image) {
-  questionImg.src = q.image;
-  questionImgContainer.style.display = "block";
-} else if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
-  questionImg.src = q.question;
-  questionImgContainer.style.display = "block";
+// Vraag tekst of afbeelding
+if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
+    questionImg.src = q.question;
+    questionImgContainer.style.display = "block";
+    questionTextEl.innerText = q.instruction || ""; // alleen instructie als die er is
+    questionTextEl.style.display = q.instruction ? "block" : "none";
 } else {
-  questionImgContainer.style.display = "none";
+    let questionText = "";
+    if (q.instruction) questionText += q.instruction + "\n\n";
+    questionText += q.question;
+    questionTextEl.innerText = questionText;
+    questionTextEl.style.display = "block";
+    questionImg.src = q.image || "";
+    questionImgContainer.style.display = q.image ? "block" : "none";
 }
 
+
+if (currentQuiz === "patronen") {
+    if (q.image) {
+        questionImg.src = q.image;
+        questionImgContainer.style.display = "block";
+    } else if (q.question.match(/\.(png|jpg|jpeg|gif)$/i)) {
+        questionImg.src = q.question;
+        questionImgContainer.style.display = "block";
+    } else {
+        questionImgContainer.style.display = "none";
+        questionImg.src = "";
+    }
+
+    const answersEl = document.querySelector(".answers");
+    if ((currentQuestion < 6) || currentQuestion === 9) { 
+        answersEl.classList.add("centered");
+    } else {
+        answersEl.classList.remove("centered");
+    }
+}
+
+
+const answersEl = document.querySelector(".answers");
+// Voeg centreren toe bij vragen 1 t/m 6 en 10 in patronen
+if (currentQuiz === "patronen" && 
+    ((currentQuestion < 6) || currentQuestion === 9)) { 
+  answersEl.classList.add("centered");
+} else {
+  answersEl.classList.remove("centered");
+}
   // Antwoorden
   q.answers.forEach((ans, i) => {
     const btn = document.getElementById("btn"+i);
@@ -1208,7 +1244,7 @@ const patronenVragen = [
   // Cijferreeksen: vragen 1-3
   { 
     instruction: "Vind het volgende getal in de reeks:",
-    question: "img patronen/vraag 1/cijferreeks_1.png", 
+    question: "img patronen/vraag 1/cijferreeks_1.png",
     answers: [
       "img patronen/vraag 1/1_part_1.png",
       "img patronen/vraag 1/1_part_2.png",
@@ -1219,7 +1255,7 @@ const patronenVragen = [
   },
   { 
     instruction: "Vind het volgende getal in de reeks:",
-    question: "img patronen/vraag 1/vraag 2/cijferreeks_2.png", 
+    question: "img patronen/vraag 1/vraag 2/cijferreeks_2.png",
     answers: [
       "img patronen/vraag 1/vraag 2/2_part_1_goed.png",
       "img patronen/vraag 1/vraag 2/2_part_2.png",
@@ -1230,7 +1266,7 @@ const patronenVragen = [
   },
   { 
     instruction: "Vind het volgende getal in de reeks:",
-    question: "img patronen/vraag 1/vraag 2/vraag 3/cijferreeks_3.png", 
+    question: "img patronen/vraag 1/vraag 2/vraag 3/cijferreeks_3.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/3_part_1.png",
       "img patronen/vraag 1/vraag 2/vraag 3/3_part_2_goed.png",
@@ -1243,7 +1279,7 @@ const patronenVragen = [
   // Patronenreeksen: vragen 4-6
   { 
     instruction: "Vind het volgende patroon in de reeks:",
-    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/patronenreeks4.png", 
+    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/patronenreeks4.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/4_part_1.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/4_part_2.png",
@@ -1254,7 +1290,7 @@ const patronenVragen = [
   },
   { 
     instruction: "Vind het volgende patroon in de reeks:",
-    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/patronenreeks5.png", 
+    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/patronenreeks5.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/5_part_1.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/5_part_2.png",
@@ -1265,7 +1301,7 @@ const patronenVragen = [
   },
   { 
     instruction: "Vind het volgende patroon in de reeks:",
-    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/patronenreeks6.png", 
+    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/patronenreeks6.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/6_part_1_goed.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/6_part_2.png",
@@ -1275,10 +1311,11 @@ const patronenVragen = [
     correct: 0
   },
 
-  // Diagrammen: vragen 7-9
+  // Diagrammen: vragen 7-9 (geen image)
   { 
     instruction: "Kies het diagram dat logisch past bij de reeks:",
-    question: "Frankrijk - Europa - Azië", 
+    question: "Frankrijk - Europa - Azië",
+    image: "imgpatronenextra/earth.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/7_part_1_goed.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/7_part_2.png",
@@ -1289,7 +1326,8 @@ const patronenVragen = [
   },
   { 
     instruction: "Kies het diagram dat logisch past bij de reeks:",
-    question: "Dieren - Vogels - Meeuwen", 
+    question: "Dieren - Vogels - Meeuwen",
+    image: "imgpatronenextra/bird.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/8_part_1.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/8_part_2_goed.png",
@@ -1301,6 +1339,7 @@ const patronenVragen = [
   { 
     instruction: "Kies het diagram dat logisch past bij de reeks:",
     question: "Insecten - Mug - Vlinder",
+    image: "imgpatronenextra/Ladybug.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/9_part_1.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/9_part_2.png",
@@ -1313,7 +1352,7 @@ const patronenVragen = [
   // Kubus: vraag 10
   { 
     instruction: "Kies de afbeelding die ontstaat als je deze blueprint tot een kubus vouwt:",
-    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/vraag 10/doospatroon.png", 
+    question: "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/vraag 10/doospatroon.png",
     answers: [
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/vraag 10/10_part_1_goed.png",
       "img patronen/vraag 1/vraag 2/vraag 3/vraag 4/vraag 5/vraag 6/vraag 7/vraag 8/vraag 9/vraag 10/10_part_2.png",
@@ -1323,11 +1362,6 @@ const patronenVragen = [
     correct: 0
   }
 ];
-
-
-
-
-
 
     // Toon startscherm bij laden (veiligheid)
     showScreen("start-scherm");
